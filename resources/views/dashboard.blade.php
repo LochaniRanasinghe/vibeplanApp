@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin.master')
 
 @section('title', 'Home')
 
@@ -57,7 +57,6 @@
 
             $('.select2').select2();
 
-            
         });
     </script>
 @endsection
