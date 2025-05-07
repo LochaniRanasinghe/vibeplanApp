@@ -16,7 +16,7 @@
         <div class="dropdown me-5">
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ asset('images/admin-img2.jpg') }}" alt="" width="50" height="50"
+                <img src="{{ asset('images/admin-img.png') }}" alt="" width="50" height="50"
                     class="rounded-circle me-2">
                 <strong>Profile</strong>
             </a>

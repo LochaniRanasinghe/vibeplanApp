@@ -17,7 +17,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home"></use>
                 </svg>
-                Home
+                Dashboard
             </a>
         </li>
         <li>
@@ -26,7 +26,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home"></use>
                 </svg>
-                Dashboard
+                My Events
             </a>
         </li>
         <li>
@@ -34,7 +34,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#table"></use>
                 </svg>
-                Orders
+                Customer Requests
             </a>
         </li>
         <li>
@@ -42,7 +42,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#grid"></use>
                 </svg>
-                Products
+                Place Inventory Orders
             </a>
         </li>
         <li>
@@ -50,15 +50,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#people-circle"></use>
                 </svg>
-                Customers
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle"></use>
-                </svg>
-                Customers
+                My Payments
             </a>
         </li>
     </ul>

@@ -17,7 +17,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home"></use>
                 </svg>
-                Home
+                Dashboard
             </a>
         </li>
         <li>
@@ -26,7 +26,16 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home"></use>
                 </svg>
-                Dashboard
+                Manage Users
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#home"></use>
+                </svg>
+                Event Types
             </a>
         </li>
         <li>
@@ -34,7 +43,15 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#table"></use>
                 </svg>
-                Orders
+                View All Events
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#table"></use>
+                </svg>
+                Event Inquiries
             </a>
         </li>
         <li>
@@ -42,7 +59,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#grid"></use>
                 </svg>
-                Products
+                Inventory Overview
             </a>
         </li>
         <li>
@@ -50,15 +67,7 @@
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#people-circle"></use>
                 </svg>
-                Customers
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link link-dark">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle"></use>
-                </svg>
-                Customers
+                Payments Overview
             </a>
         </li>
     </ul>
@@ -66,7 +75,7 @@
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
             id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ asset('images/admin-img2.jpg') }}" alt="" width="32" height="32"
+            <img src="{{ asset('images/admin-img.png') }}" alt="" width="32" height="32"
                 class="rounded-circle me-2">
             <strong>mdo</strong>
         </a>
