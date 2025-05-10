@@ -61,7 +61,6 @@
                                     width="120">
                             @endif
                         </div>
-
                     </div>
 
                     <div class="text-center mt-4">

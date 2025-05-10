@@ -1,6 +1,6 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Home')
+@section('title', 'UI')
 
 @section('content')
     <div class="row text-center">
@@ -40,11 +40,7 @@
             </tbody>
         </table>
 
-        <select class="form-select select2" style="width: 100%;">
-            <option value="birthday">Birthday</option>
-            <option value="wedding">Wedding</option>
-            <option value="conference">Conference</option>
-        </select>
+        UIIIII
 
 
     </div>

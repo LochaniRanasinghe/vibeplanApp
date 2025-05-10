@@ -44,8 +44,8 @@ class EventTypeController extends Controller
         ]);
 
         if ($request->hasFile('image_url')) {
-            $path = $request->file('image_url')->store('public/event-types');
-            $validated['image_url'] = str_replace('public/', '', $path);
+            $path = $request->file('image_url')->store('event-types', 'public');
+            $validated['image_url'] = $path;
         }
 
         EventType::create($validated);
@@ -75,7 +75,6 @@ class EventTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //dd($request->all());
         $eventType = EventType::findOrFail($id);
 
         $validated = $request->validate([
@@ -88,16 +87,14 @@ class EventTypeController extends Controller
         ]);
 
         if ($request->hasFile('image_url')) {
-            // Delete old image if it exists
-            if ($eventType->image_url && Storage::exists($eventType->image_url)) {
-                Storage::delete($eventType->image_url);
+            if ($eventType->image_url && Storage::disk('public')->exists($eventType->image_url)) {
+                Storage::disk('public')->delete($eventType->image_url);
             }
-        
-            $path = $request->file('image_url')->store('public/event-types');
-            $validated['image_url'] = str_replace('public/', '', $path);
-
+    
+            // Store new image to public disk
+            $path = $request->file('image_url')->store('event-types', 'public'); // ✅ Correct location
+            $validated['image_url'] = $path; 
         }
-        
 
         $eventType->update($validated);
         Log::info('Updated EventType:', $validated);

@@ -40,12 +40,7 @@
             </tbody>
         </table>
 
-        <select class="form-select select2" style="width: 100%;">
-            <option value="birthday">Birthday</option>
-            <option value="wedding">Wedding</option>
-            <option value="conference">Conference</option>
-        </select>
-
+        <h1>Admin Dashboard</h1>
 
     </div>
 @endsection
