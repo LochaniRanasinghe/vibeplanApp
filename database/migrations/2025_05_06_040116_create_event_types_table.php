@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->integer('min_guests');
-            $table->integer('max_guests');
+            $table->string('locations');
+            $table->string('starting_price');
             $table->string('image_url')->nullable();
+
+            // 👇 Foreign key reference to users table
+            $table->foreignId('added_by')->constrained('users')->onDelete('set null')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

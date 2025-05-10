@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EventTypeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Customers\CustomerDashboardController;
 use App\Http\Controllers\EventOrganizer\EventOrganizerDashboardController;
@@ -20,7 +21,15 @@ Route::middleware('auth')->group(function () {
     // Admin Portal
     Route::group(['prefix' => 'admin', 'middleware' => ['role:admin', 'log_request'], 'as' => 'admin.'], function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::resource('/users', UserController::class);
+        
+        Route::get('users/get-event-organizers', [UserController::class, 'getEventOrganizers'])->name('users.get-event-organizers');
+        Route::get('users/get-inventory-staff', [UserController::class, 'getInventoryStaff'])->name('users.get-inventory-staff');
+        Route::get('users/get-customers', [UserController::class, 'getCustomers'])->name('users.get-customers');
+        Route::resource('users', UserController::class);
+
+        Route::get('event-types/get-event-types', [EventTypeController::class, 'getEventTypes'])->name('event-types.get-event-types');
+        Route::resource('event-types', EventTypeController::class);
+
     });
 
     // Customer Portal

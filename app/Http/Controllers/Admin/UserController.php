@@ -1,12 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\User;
+use Throwable;
 
+use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Flasher\Laravel\Facade\Flasher;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -15,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.users.index');
     }
 
     /**
@@ -23,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -31,7 +36,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'address' => 'required|string',
+            'phone_number' => 'required|string',
+            'password' => 'required|string|min:6',
+            'role' => 'required|string|in:customer,event_organizer,inventory_staff,admin',
+        ]);
+
+        $validated['password'] = bcrypt($validated['password']);
+
+        User::create($validated);
+
+        flash()->success('User registered successfully.');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -39,7 +58,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -55,8 +75,29 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'address' => 'required|string',
+            'phone_number' => 'required|string|max:10',
+            'role' => 'required|in:customer,event_organizer,inventory_staff,admin',
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        if ($request->filled('password')) {
+            $validated['password'] = bcrypt($request->password);
+        } else {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+
+        flash()->success('User Updated successfully.');
+        return redirect()->back();
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -64,6 +105,75 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getEventOrganizers(Request $request)
+    {
+        return $this->getUsersByRole($request, 'event_organizer');
+    }
+
+    public function getInventoryStaff(Request $request)
+    {
+        return $this->getUsersByRole($request, 'inventory_staff');
+    }
+
+    public function getCustomers(Request $request)
+    {
+        return $this->getUsersByRole($request, 'customer');
+    }
+
+    private function getUsersByRole(Request $request, string $role)
+    {
+        try {
+            $query = User::query()
+            ->where('role', $role)
+            ->orderBy('created_at', 'desc');
+
+            return DataTables::of($query)
+                ->filter(function ($query) use ($request) {
+                    if ($request->has('search.value')) {
+                        $searchValue = $request->input('search.value');
+                        $query->where(function ($subquery) use ($searchValue) {
+                            $subquery->where('name', 'like', "%{$searchValue}%")
+                                ->orWhere('email', 'like', "%{$searchValue}%")
+                                ->orWhere('phone_number', 'like', "%{$searchValue}%");
+                        });
+                    }
+                })
+                ->addColumn('name', function ($user) {
+                    return e($user->name);
+                })
+                ->addColumn('phone_number', function ($user) {
+                    return e($user->phone_number);
+                })
+                ->addColumn('email', function ($user) {
+                    return e($user->email);
+                })
+                ->addColumn('address', function ($user) {
+                    return e($user->address);
+                })
+                ->addColumn('role', function ($user) {
+                    $role = $user->role;
+                
+                    if (str_contains($role, '_')) {
+                        return e(ucwords(str_replace('_', ' ', $role)));
+                    }
+                
+                    return e(ucfirst($role));
+                })                
+                ->addColumn('created_at', function ($user) {
+                    return $user->created_at 
+                        ? Carbon::parse($user->created_at)->format('Y-m-d') 
+                        : 'N/A';
+                })                             
+                ->addColumn('actions', function ($user) {
+                    return view('admin.users.components.actions', ['user' => $user])->render();
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        } catch (Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
     }
 
     public function login()

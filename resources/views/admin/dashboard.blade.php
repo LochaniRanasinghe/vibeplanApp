@@ -1,6 +1,6 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Dashboard')
+@section('title', 'VibePlan-Dashboard')
 
 @section('content')
     <div class="row text-center">
