@@ -44,6 +44,19 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6">
+                            <label class="form-label">Event Title</label>
+                            <input type="text" class="form-control readonly-field"
+                                value="{{ $inventoryOrder->customEvent?->request?->title ?? 'N/A' }}" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Event Type</label>
+                            <input type="text" class="form-control readonly-field"
+                                value="{{ $inventoryOrder->customEvent?->request?->eventType?->name ?? 'N/A' }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
                             <label class="form-label">Ordered By (Organizer)</label>
                             <input type="text" class="form-control readonly-field"
                                 value="{{ $inventoryOrder->customEvent?->organizer?->name ?? 'N/A' }}" readonly>
@@ -74,7 +87,8 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Quantity</label>
-                            <input type="text" name="quantity"  class="form-control" value="{{ $inventoryOrder->quantity }}" required>
+                            <input type="text" name="quantity" class="form-control"
+                                value="{{ $inventoryOrder->quantity }}" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Status</label>

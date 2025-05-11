@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use Throwable;
 
+use App\Models\CustomEvent;
 use Illuminate\Http\Request;
 use App\Models\EventInventoryOrder;
 use App\Http\Controllers\Controller;
@@ -39,6 +40,11 @@ class EventInventoryOrderController extends Controller
      */
     public function show(EventInventoryOrder $inventoryOrder)
     {
+        $inventoryOrder->load([
+            'customEvent.organizer',
+            'customEvent.request.eventType',
+            'inventoryItem.staff'
+        ]);
         return view('admin.inventory-orders.show', compact('inventoryOrder'));
     }
 
@@ -119,6 +125,41 @@ class EventInventoryOrderController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function getOrdersByCustomEvent(Request $request, CustomEvent $customEvent)
+    {
+        try {
+            $query = $customEvent->inventoryOrders()
+                ->with(['inventoryItem.staff'])
+                ->select('event_inventory_orders.*') // 👈 this is important
+                ->orderBy('event_inventory_orders.created_at', 'desc');
+
+            return DataTables::eloquent($query)
+                ->addColumn('item_name', fn($order) => $order->inventoryItem?->item_name ?? 'N/A')
+                ->addColumn('ordered_from', fn($order) => $order->inventoryItem?->staff?->name ?? 'N/A')
+                ->addColumn('quantity', fn($order) => $order->quantity)
+                ->addColumn('unit_price', fn($order) => 'LKR ' . number_format($order->inventoryItem?->price_per_unit ?? 0, 2))
+                ->addColumn('total_price', fn($order) => 'LKR ' . number_format(($order->inventoryItem?->price_per_unit ?? 0) * $order->quantity, 2))
+                ->addColumn('status', function ($order) {
+                    $status = strtolower($order->status);
+                    $badgeClass = match ($status) {
+                        'pending' => 'badge bg-primary text-white',
+                        'approved' => 'badge bg-success',
+                        'rejected' => 'badge bg-danger',
+                        default => 'badge bg-secondary',
+                    };
+                    return "<span class='{$badgeClass}'>" . ucfirst($status) . "</span>";
+                })
+                ->rawColumns(['status'])
+                ->make(true);
+        } catch (Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 500);
         }
     }

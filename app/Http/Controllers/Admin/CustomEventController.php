@@ -39,7 +39,11 @@ class CustomEventController extends Controller
      */
     public function show(CustomEvent $customEvent)
     {
-        $customEvent->load(['request.customer', 'request.eventType.addedBy']);
+        $customEvent->load([
+            'request.customer',
+            'request.eventType.addedBy',
+            'inventoryOrders.inventoryItem.staff'
+        ]);
         return view('admin.scheduled-events.show', compact('customEvent'));
     }
 

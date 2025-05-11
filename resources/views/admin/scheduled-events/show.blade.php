@@ -33,7 +33,9 @@
             {{-- Put your inventory form or display here --}}
             <div class="card">
                 <div class="card-body">
-                    @include('admin.scheduled-events.components.view-details', ['customEvent' => $customEvent])
+                    @include('admin.scheduled-events.components.view-details', [
+                        'customEvent' => $customEvent,
+                    ])
                 </div>
             </div>
         </div>
@@ -51,7 +53,9 @@
             {{-- Add your View Details content here --}}
             <div class="card">
                 <div class="card-body">
-                    @include('admin.scheduled-events.components.inventory', ['customEvent' => $customEvent])
+                    @include('admin.scheduled-events.components.inventory', [
+                        'customEvent' => $customEvent,
+                    ])
                 </div>
             </div>
         </div>
@@ -62,6 +66,64 @@
     <script>
         $(document).ready(function() {
             $('.select2').select2();
+
+            $('#event-inventory-orders').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.inventory-orders.by-custom-event', $customEvent->id) }}",
+                columns: [{
+                        data: 'item_name',
+                        name: 'inventoryItem.item_name'
+                    },
+                    {
+                        data: 'ordered_from',
+                        name: 'inventoryItem.staff.name'
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity'
+                    },
+                    {
+                        data: 'unit_price',
+                        name: 'inventoryItem.price_per_unit'
+                    },
+                    {
+                        data: 'total_price',
+                        name: 'total_price'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    }
+                ]
+            });
+
+            $('#payments-by-event').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.payments.by-custom-event', $customEvent->id) }}",
+                columns: [{
+                        data: 'customer',
+                        name: 'customer.name'
+                    },
+                    {
+                        data: 'amount',
+                        name: 'amount'
+                    },
+                    {
+                        data: 'payment_method',
+                        name: 'payment_method'
+                    },
+                    {
+                        data: 'payment_status',
+                        name: 'payment_status'
+                    },
+                    {
+                        data: 'paid_at',
+                        name: 'paid_at'
+                    }
+                ]
+            });
         });
     </script>
 @endsection

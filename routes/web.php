@@ -44,9 +44,11 @@ Route::middleware('auth')->group(function () {
         Route::get('inventory-items/get-inventory-items', [InventoryItemController::class, 'getInventoryItems'])->name('inventory-items.get-inventory-items');
         Route::resource('inventory-items', InventoryItemController::class);
 
+        Route::get('inventory-orders/by-custom-event/{customEvent}', [EventInventoryOrderController::class, 'getOrdersByCustomEvent'])->name('inventory-orders.by-custom-event');
         Route::get('inventory-orders/get-inventory-orders', [EventInventoryOrderController::class, 'getInventoryOrders'])->name('inventory-orders.get-inventory-orders');
         Route::resource('inventory-orders', EventInventoryOrderController::class);
 
+        Route::get('payments/by-custom-event/{customEvent}', [PaymentController::class, 'getPaymentsByCustomEvent'])->name('payments.by-custom-event');        
         Route::get('payments/get-payment-details', [PaymentController::class, 'getPaymentDetails'])->name('payments.get-payment-details');
         Route::resource('payments', PaymentController::class);
     });

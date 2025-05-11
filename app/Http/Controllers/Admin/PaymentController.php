@@ -5,6 +5,7 @@ use Throwable;
 
 use Carbon\Carbon;
 use App\Models\Payment;
+use App\Models\CustomEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
@@ -113,6 +114,37 @@ class PaymentController extends Controller
                 'status' => 'error',
                 'message' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function getPaymentsByCustomEvent(Request $request, CustomEvent $customEvent)
+    {
+        try {
+            $query = $customEvent->payments()->with('customer')->orderBy('paid_at', 'desc');
+
+            return DataTables::eloquent($query)
+                ->addColumn('customer', fn($payment) => $payment->customer?->name ?? 'N/A')
+                ->addColumn('amount', fn($payment) => 'LKR ' . number_format($payment->amount, 2))
+                ->addColumn('payment_method', fn($payment) => ucfirst($payment->payment_method))
+                ->addColumn('payment_status', function ($payment) {
+                    $status = strtolower($payment->payment_status);
+                    $badgeClass = match ($status) {
+                        'pending'  => 'badge bg-warning text-dark',
+                        'paid'     => 'badge bg-success',
+                        'failed'   => 'badge bg-danger',
+                        default    => 'badge bg-secondary',
+                    };
+                    return "<span class='{$badgeClass}'>" . ucfirst($status) . "</span>";
+                })
+                ->addColumn('paid_at', function ($payment) {
+                    return $payment->paid_at 
+                        ? Carbon::parse($payment->paid_at)->format('Y-m-d') 
+                        : 'N/A';
+                })
+                ->rawColumns(['payment_status'])
+                ->make(true);
+        } catch (Throwable $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 }
