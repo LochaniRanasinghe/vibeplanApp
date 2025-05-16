@@ -40,7 +40,7 @@
                             <th>Phone Number</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Address</th>
+                            <th>Status</th>
                             <th>Registered At</th>
                             <th>Actions</th>
                         </tr>
@@ -59,7 +59,7 @@
                             <th>Phone Number</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Address</th>
+                            <th>Status</th>
                             <th>Registered At</th>
                             <th>Actions</th>
                         </tr>
@@ -78,7 +78,7 @@
                             <th>Phone Number</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Address</th>
+                            <th>Status</th>
                             <th>Registered At</th>
                             <th>Actions</th>
                         </tr>
@@ -113,8 +113,8 @@
                         name: 'role'
                     },
                     {
-                        data: 'address',
-                        name: 'address'
+                        data: 'active_status',
+                        name: 'active_status'
                     },
                     {
                         data: 'created_at',
@@ -150,8 +150,8 @@
                         name: 'role'
                     },
                     {
-                        data: 'address',
-                        name: 'address'
+                        data: 'active_status',
+                        name: 'active_status'
                     },
                     {
                         data: 'created_at',
@@ -187,8 +187,8 @@
                         name: 'role'
                     },
                     {
-                        data: 'address',
-                        name: 'address'
+                        data: 'active_status',
+                        name: 'active_status'
                     },
                     {
                         data: 'created_at',

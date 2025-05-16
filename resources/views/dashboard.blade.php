@@ -18,31 +18,7 @@
         </div>
     </div>
     <div class="row">
-        <table id="events-table" class="display">
-            <thead>
-                <tr>
-                    <th>Event</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Birthday Bash</td>
-                    <td>Birthday</td>
-                    <td>2025-05-06</td>
-                </tr>
-                <tr>
-                    <td>Wedding Ceremony</td>
-                    <td>Wedding</td>
-                    <td>2025-06-01</td>
-                </tr>
-            </tbody>
-        </table>
-
-        UIIIII
-
-
+        <h1>Ui UI UI</h1>
     </div>
 @endsection
 

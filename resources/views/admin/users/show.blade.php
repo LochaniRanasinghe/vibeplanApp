@@ -75,12 +75,31 @@
                             <input type="password" class="form-control" id="password" name="password"
                                 placeholder="Leave blank to keep existing password">
                         </div>
+
+                        {{-- Active Status --}}
+                        <div class="col-md-6 mb-3">
+                            <label for="active_status" class="form-label">Active Status</label>
+                            <select class="form-control select2" name="active_status" id="active_status" required>
+                                <option value="">Select Active Status</option>
+                                <option value="1" {{ $user->active_status === '1' ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ $user->active_status === '0' ? 'selected' : '' }}>Inactive
+                                </option>
+                            </select>
+                        </div>
+
+                        {{-- Registered At-created_at --}}
+                        <div class="col-md-6 mb-3">
+                            <label for="created_at" class="form-label">Registered At</label>
+                            <input type="text" class="form-control" id="created_at" name="created_at"
+                                value="{{ $user->created_at }}" disabled>
+                        </div>
                     </div>
 
                     <div class="text-center mt-4">
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-outline-primary px-4 me-2">Return Back</a>
+                        <a href="{{ route('admin.users.index') }}" class="btn btn-outline-primary px-4 me-2">Return
+                            Back</a>
                         <button type="submit" class="btn btn-primary px-4">Update User</button>
-                    </div>                                        
+                    </div>
                 </form>
             </div>
         </div>

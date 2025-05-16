@@ -113,7 +113,7 @@
                                     <div class="col-md-10 mx-auto form-group">
                                         <div class="d-grid">
                                             <button class="btn" type="submit"
-                                                style="background-color:#e493db; padding: 5px 10px; border-radius: 5px; color: white; text-decoration: none;">Sign
+                                                style="background-color:#de5ccf; padding: 5px 10px; border-radius: 5px; color: white; text-decoration: none;">Sign
                                                 In</button>
                                         </div>
                                     </div>
@@ -121,7 +121,9 @@
                                         <div class="position-relative text-center border-bottom my-3">
                                             <span
                                                 class="position-absolute top-50 start-50 translate-middle bg-white px-3">
-                                                Login to
+                                                Don't have an account?
+                                                <a href="{{ route('register') }}"
+                                                    class="text-decoration-none fw-bold text-primary">Register </a>
                                             </span>
                                         </div>
                                     </div>
@@ -144,13 +146,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-    <script>
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            var passwordInput = document.getElementById('password');
-            var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-        });
     </script>
 </body>
 

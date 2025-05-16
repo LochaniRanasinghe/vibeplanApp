@@ -50,12 +50,22 @@
                         </div>
 
                         <!-- Phone Number -->
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="phone_number" class="form-label">Phone Number</label>
                             <input type="text" class="form-control" id="phone_number" name="phone_number"
                                 placeholder="Enter phone number" required pattern="\d{10}"
                                 title="Phone number must be exactly 10 digits" maxlength="10"
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                        </div>
+
+                        <!-- active_status -->
+                        <div class="col-md-3 mb-3">
+                            <label for="active_status" class="form-label">Status</label>
+                            <select class="form-control select2" name="active_status" id="active_status" required>
+                                <option value="">Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
                         </div>
 
                         <!-- Email -->

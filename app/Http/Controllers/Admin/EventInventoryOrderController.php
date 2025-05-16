@@ -135,7 +135,7 @@ class EventInventoryOrderController extends Controller
         try {
             $query = $customEvent->inventoryOrders()
                 ->with(['inventoryItem.staff'])
-                ->select('event_inventory_orders.*') // 👈 this is important
+                ->select('event_inventory_orders.*') 
                 ->orderBy('event_inventory_orders.created_at', 'desc');
 
             return DataTables::eloquent($query)

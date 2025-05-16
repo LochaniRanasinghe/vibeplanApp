@@ -40,6 +40,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'address' => 'required|string',
+            'active_status' => 'required|in:1,0',
             'phone_number' => 'required|string',
             'password' => 'required|string|min:6',
             'role' => 'required|string|in:customer,event_organizer,inventory_staff,admin',
@@ -70,6 +71,35 @@ class UserController extends Controller
         //
     }
 
+    public function register()
+    {
+        return view('auth.register');
+    }
+
+    public function registeruser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'password' => 'required|string|min:6|confirmed', 
+            'role' => 'required|in:customer,event_organizer,inventory_staff,admin',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'address' => $validated['address'],
+            'phone_number' => $validated['phone_number'],
+            'password' => bcrypt($validated['password']),
+            'role' => $validated['role'],
+            'active_status' => '1', 
+        ]);
+
+        return redirect()->route('login')->with('success', 'Registration successful. Please log in.');
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -83,6 +113,7 @@ class UserController extends Controller
             'address' => 'required|string',
             'phone_number' => 'required|string|max:10',
             'role' => 'required|in:customer,event_organizer,inventory_staff,admin',
+            'active_status' => 'required|in:1,0',
             'password' => 'nullable|string|min:6',
         ]);
 
@@ -127,6 +158,7 @@ class UserController extends Controller
         try {
             $query = User::query()
             ->where('role', $role)
+            ->whereIn('active_status', ['1', '0'])
             ->orderBy('created_at', 'desc');
 
             return DataTables::of($query)
@@ -152,6 +184,13 @@ class UserController extends Controller
                 ->addColumn('address', function ($user) {
                     return e($user->address);
                 })
+                ->addColumn('active_status', function ($user) {
+                    if ($user->active_status == '1') {
+                        return '<span class="badge bg-success">Active</span>';
+                    } else {
+                        return '<span class="badge bg-danger">Inactive</span>';
+                    }
+                })
                 ->addColumn('role', function ($user) {
                     $role = $user->role;
                 
@@ -169,7 +208,7 @@ class UserController extends Controller
                 ->addColumn('actions', function ($user) {
                     return view('admin.users.components.actions', ['user' => $user])->render();
                 })
-                ->rawColumns(['actions'])
+                ->rawColumns(['actions','active_status'])
                 ->make(true);
         } catch (Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
@@ -191,9 +230,12 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
 
         $user = User::where('email', $request->input('email'))->first();
-        // dd($user,$request->input('email'));
 
         if ($user) {
+            if ($user->active_status !== '1') {
+                return redirect()->back()->with('fail', 'Your account is not active.');
+            }
+
             if (in_array($user->role, ['customer', 'event_organizer', 'inventory_staff', 'admin'])) {
                 if (Auth::attempt($credentials)) {
                     switch ($user->role) {
@@ -215,8 +257,8 @@ class UserController extends Controller
         } else {
             return redirect()->back()->with('fail', 'User does not exist.');
         }
-
     }
+
 
     public function logout()
     {
