@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name', 'email', 'phone_number', 'profile_image', 'password', 'role'
+        'name', 'email', 'address', 'active_status','phone_number', 'profile_image', 'password', 'role'
     ];
 
 
@@ -70,4 +70,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Payment::class, 'customer_id');
     }
+
+    public function addedEventTypes()
+    {
+        return $this->hasMany(EventType::class, 'added_by');
+    }
+
 }
