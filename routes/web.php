@@ -13,6 +13,12 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EventInventoryOrderController;
 use App\Http\Controllers\Customers\CustomerDashboardController;
 use App\Http\Controllers\EventOrganizer\EventOrganizerDashboardController;
+use App\Http\Controllers\EventOrganizer\EventTypeController as EventOrganizerEventTypeController;
+use App\Http\Controllers\EventOrganizer\EventRequestController as EventOrganizerEventRequestController;
+use App\Http\Controllers\EventOrganizer\CustomEventController as EventOrganizerCustomEventController;
+use App\Http\Controllers\EventOrganizer\InventoryItemController as EventOrganizerInventoryItemController;
+use App\Http\Controllers\EventOrganizer\EventInventoryOrderController as EventOrganizerEventInventoryOrderController;
+use App\Http\Controllers\EventOrganizer\PaymentController as EventOrganizerPaymentController;
 use App\Http\Controllers\InventoryStaff\InventoryStaffDashboardController;
 
 Route::get('/', function () {
@@ -61,6 +67,28 @@ Route::middleware('auth')->group(function () {
     // Event Organizer Portal
     Route::group(['prefix' => 'event-organizer', 'middleware' => ['role:event_organizer'], 'as' => 'event_organizer.'], function () {
         Route::get('/dashboard', [EventOrganizerDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('event-types/get-event-types', [EventOrganizerEventTypeController::class, 'getEventTypes'])->name('event-types.get-event-types');
+        Route::resource('event-types', EventOrganizerEventTypeController::class);
+
+        Route::get('event-requests/get-event-requests', [EventOrganizerEventRequestController::class, 'getEventRequests'])->name('event-requests.get-event-requests');
+        Route::resource('event-requests', EventOrganizerEventRequestController::class);
+
+        Route::get('custom-events/get-custom-events', [EventOrganizerCustomEventController::class, 'getCustomEvents'])->name('custom-events.get-custom-events');
+        Route::resource('custom-events', EventOrganizerCustomEventController::class);
+
+        Route::post('inventory-items/{item}/place-order', [EventOrganizerInventoryItemController::class, 'placeOrder'])->name('inventory-items.place-order');
+        Route::get('inventory-items/get-inventory-items', [EventOrganizerInventoryItemController::class, 'getInventoryItems'])->name('inventory-items.get-inventory-items');
+        Route::get('inventory-items/{item}/order', [EventOrganizerInventoryItemController::class, 'orderItem'])->name('inventory-items.order');
+        Route::resource('inventory-items', EventOrganizerInventoryItemController::class);
+
+        Route::get('inventory-orders/by-custom-event/{customEvent}', [EventOrganizerEventInventoryOrderController::class, 'getOrdersByCustomEvent'])->name('inventory-orders.by-custom-event');
+        Route::get('inventory-orders/get-inventory-orders', [EventOrganizerEventInventoryOrderController::class, 'getInventoryOrders'])->name('inventory-orders.get-inventory-orders');
+        Route::resource('inventory-orders', EventOrganizerEventInventoryOrderController::class);
+
+        Route::get('payments/by-custom-event/{customEvent}', [EventOrganizerPaymentController::class, 'getPaymentsByCustomEvent'])->name('payments.by-custom-event');        
+        Route::get('payments/get-payment-details', [EventOrganizerPaymentController::class, 'getPaymentDetails'])->name('payments.get-payment-details');
+        Route::resource('payments', EventOrganizerPaymentController::class);
     });
 
     // Inventory Staff Portal

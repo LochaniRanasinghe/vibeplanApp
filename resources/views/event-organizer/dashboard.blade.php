@@ -1,52 +1,85 @@
 @extends('layouts.event-organizer.master')
 
-@section('title', 'Home')
+@section('css')
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
+    <style>
+
+    </style>
+@endsection
+
+@section('title', 'VibePlan-Event Organizer Dashboard')
+
+@section('parent_heading', 'Event Organizer Dashboard')
+@section('parent_icon', 'mdi-account-multiple-outline')
+@section('child_heading', 'Event Organizer Dashboard')
 
 @section('content')
-    <div class="row text-center">
-        <div class="col-md-4">
-            <i class="mdi mdi-calendar text-primary" style="font-size: 40px;"></i>
-            <h5>Events</h5>
-        </div>
-        <div class="col-md-4">
-            <i class="mdi mdi-chair-school text-success" style="font-size: 40px;"></i>
-            <h5>Inventory</h5>
-        </div>
-        <div class="col-md-4">
-            <i class="mdi mdi-account-multiple text-info" style="font-size: 40px;"></i>
-            <h5>Users</h5>
-        </div>
-    </div>
-    <div class="row">
-        <table id="events-table" class="display">
-            <thead>
-                <tr>
-                    <th>Event</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Birthday Bash</td>
-                    <td>Birthday</td>
-                    <td>2025-05-06</td>
-                </tr>
-                <tr>
-                    <td>Wedding Ceremony</td>
-                    <td>Wedding</td>
-                    <td>2025-06-01</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="card" style="border-radius: 15px;">
+        <div class="card-body">
+            <div class="container-fluid mt-3">
+                <div class="row">
+                    <!-- Main Content -->
+                    <div class="col-md-12">
+                        <div class="border p-3 mb-3 bg-light">
+                            <h4>Event Organizer Dashboard</h4>
+                            <p>Some text..</p>
+                        </div>
 
-        <select class="form-select select2" style="width: 100%;">
-            <option value="birthday">Birthday</option>
-            <option value="wedding">Wedding</option>
-            <option value="conference">Conference</option>
-        </select>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="border p-3 bg-light mb-3">
+                                    <h4>Users</h4>
+                                    <p>1 Million</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="border p-3 bg-light mb-3">
+                                    <h4>Pages</h4>
+                                    <p>100 Million</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="border p-3 bg-light mb-3">
+                                    <h4>Sessions</h4>
+                                    <p>10 Million</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="border p-3 bg-light mb-3">
+                                    <h4>Bounce</h4>
+                                    <p>30%</p>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            @for ($i = 0; $i < 3; $i++)
+                                <div class="col-sm-4">
+                                    <div class="border p-3 bg-light mb-3">
+                                        <p>Text</p>
+                                        <p>Text</p>
+                                        <p>Text</p>
+                                    </div>
+                                </div>
+                            @endfor
+                        </div>
 
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="border p-3 bg-light mb-3">
+                                    <p>Text</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="border p-3 bg-light mb-3">
+                                    <p>Text</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

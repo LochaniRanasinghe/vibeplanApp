@@ -1,0 +1,156 @@
+<?php
+
+namespace App\Http\Controllers\EventOrganizer;
+use Throwable;
+use Carbon\Carbon;
+use App\Models\Payment;
+use App\Models\CustomEvent;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
+
+class PaymentController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view('event-organizer.payments.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('event-organizer.payments.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Payment $payment)
+    {
+        $payment->load(['customer', 'customEvent.organizer', 'customEvent.request']);
+        return view('event-organizer.payments.show', compact('payment'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Payment $payment)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Payment $payment)
+    {
+        $validated = $request->validate([
+            'payment_status' => 'required|in:pending,paid,failed',
+        ]);
+
+        $payment->update(['payment_status' => $validated['payment_status']]);
+
+        flash()->success('Payment status updated successfully.');
+        return redirect()->back();
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Payment $payment)
+    {
+        //
+    }
+
+    public function getPaymentDetails(Request $request)
+    {
+        try {
+            $user = Auth::user(); 
+
+            $query = Payment::with(['customer', 'customEvent.request'])
+                ->whereHas('customEvent', function ($q) use ($user) {
+                    $q->where('organizer_id', $user->id);
+                })
+                ->select('payments.*')
+                ->orderBy('payments.created_at', 'desc');
+
+            return DataTables::eloquent($query)
+                ->addColumn('customer', fn($payment) => $payment->customer?->name ?? 'N/A')
+                ->addColumn('event', fn($payment) => $payment->customEvent?->request?->title ?? 'N/A')
+                ->addColumn('amount', fn($payment) => 'LKR ' . number_format($payment->amount, 2))
+                ->addColumn('payment_method', fn($payment) => ucfirst($payment->payment_method))
+                ->addColumn('payment_status', function ($payment) {
+                    $status = strtolower($payment->payment_status);
+                    $badgeClass = match ($status) {
+                        'pending' => 'badge bg-warning text-dark',
+                        'paid'    => 'badge bg-success',
+                        'failed'  => 'badge bg-danger',
+                        default   => 'badge bg-secondary',
+                    };
+                    return "<span class='{$badgeClass}'>" . ucfirst($status) . "</span>";
+                })
+                ->addColumn('paid_at', function ($payment) {
+                    return $payment->paid_at
+                        ? Carbon::parse($payment->paid_at)->format('Y-m-d')
+                        : 'N/A';
+                })
+                ->addColumn('actions', function ($payment) {
+                    return view('event-organizer.payments.components.actions', compact('payment'))->render();
+                })
+                ->rawColumns(['payment_status', 'actions'])
+                ->make(true);
+        } catch (Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function getPaymentsByCustomEvent(Request $request, CustomEvent $customEvent)
+    {
+        try {
+            $query = $customEvent->payments()->with('customer')->orderBy('paid_at', 'desc');
+
+            return DataTables::eloquent($query)
+                ->addColumn('customer', fn($payment) => $payment->customer?->name ?? 'N/A')
+                ->addColumn('amount', fn($payment) => 'LKR ' . number_format($payment->amount, 2))
+                ->addColumn('payment_method', fn($payment) => ucfirst($payment->payment_method))
+                ->addColumn('payment_status', function ($payment) {
+                    $status = strtolower($payment->payment_status);
+                    $badgeClass = match ($status) {
+                        'pending'  => 'badge bg-warning text-dark',
+                        'paid'     => 'badge bg-success',
+                        'failed'   => 'badge bg-danger',
+                        default    => 'badge bg-secondary',
+                    };
+                    return "<span class='{$badgeClass}'>" . ucfirst($status) . "</span>";
+                })
+                ->addColumn('paid_at', function ($payment) {
+                    return $payment->paid_at 
+                        ? Carbon::parse($payment->paid_at)->format('Y-m-d') 
+                        : 'N/A';
+                })
+                ->rawColumns(['payment_status'])
+                ->make(true);
+        } catch (Throwable $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+}

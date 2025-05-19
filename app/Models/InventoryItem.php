@@ -11,7 +11,7 @@ class InventoryItem extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['inventory_staff_id', 'item_name', 'description', 'quantity_available', 'price_per_unit'];
+    protected $fillable = ['inventory_staff_id', 'item_name', 'description', 'quantity_available', 'price_per_unit','item_image'];
 
     public function staff()
     {
