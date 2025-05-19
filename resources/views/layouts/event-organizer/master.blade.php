@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ URL::asset('images/vibe-plan-logo.ico') }}">
     <title>@yield('title', 'VibePlan')</title>
-
     <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Icons CSS -->
@@ -15,6 +15,26 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- FilePond CSS -->
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: auto;
+            padding: 6px;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            font-size: 1rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 1.5;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: calc(100% - 1px);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
     @yield('css')
 </head>
 
@@ -40,7 +60,13 @@
             {{-- Content below navbar --}}
             <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #e5e7e7;">
                 <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #fff; border-radius: 5px;">
+
+                    {{-- Breadcrumb section --}}
+                    @include('layouts.event-organizer.breadcrumb')
+
+                    {{-- Main page content --}}
                     @yield('content')
+
                 </div>
             </div>
         </div>
@@ -53,7 +79,6 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-
     @yield('scripts')
 
 </body>

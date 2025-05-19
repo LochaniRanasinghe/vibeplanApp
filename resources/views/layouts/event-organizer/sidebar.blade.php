@@ -13,7 +13,8 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('event_organizer.dashboard') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.dashboard') ? 'active' : 'link-dark' }}">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home"></use>
                 </svg>
@@ -21,39 +22,61 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark">
-
+            <a href="{{ route('event_organizer.event-types.index') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.event-types.*') ? 'active' : 'link-dark' }}">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home"></use>
                 </svg>
-                My Events
+                Event Types
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark">
+            <a href="{{ route('event_organizer.event-requests.index') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.event-requests.*') ? 'active' : 'link-dark' }}">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#table"></use>
                 </svg>
-                Customer Requests
+                Requested Events
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark">
+            <a href="{{ route('event_organizer.custom-events.index') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.custom-events.*') ? 'active' : 'link-dark' }}">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#table"></use>
+                </svg>
+                Sheduled Events
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('event_organizer.inventory-items.index') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.inventory-items.*') ? 'active' : 'link-dark' }}">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#grid"></use>
                 </svg>
-                Place Inventory Orders
+                Inventory Items
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark">
+            <a href="{{ route('event_organizer.inventory-orders.index') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.inventory-orders.*') ? 'active' : 'link-dark' }}">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#grid"></use>
+                </svg>
+                Inventory Orders
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('event_organizer.payments.index') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.payments.*') ? 'active' : 'link-dark' }}">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#people-circle"></use>
                 </svg>
-                My Payments
+                Event Payments
             </a>
         </li>
     </ul>
+
     <hr>
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
