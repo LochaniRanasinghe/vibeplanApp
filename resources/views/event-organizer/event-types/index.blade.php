@@ -1,4 +1,4 @@
-@extends('layouts.admin.master')
+@extends('layouts.event-organizer.master')
 
 @section('css')
     <style>
@@ -20,7 +20,7 @@
         <div class="card-body">
             <div class="form-group row">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.event-types.create') }}"
+                    <a href="{{ route('event_organizer.event-types.create') }}"
                         class="btn btnadd btn-success d-flex justify-content-center align-items-center fw-600 btn-responsive"
                         style="text-decoration: none; color: white; width: 20%;">
                         <i class="mdi mdi-account-plus me-1" style="font-size: 18px;"></i>
@@ -37,6 +37,7 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Name</th>
+                            <th>Description</th>
                             <th>Locations</th>
                             <th>Starting Price</th>
                             <th>Added By</th>
@@ -56,10 +57,14 @@
             $('#event-types-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('admin.event-types.get-event-types') }}',
+                ajax: '{{ route('event_organizer.event-types.get-event-types') }}',
                 columns: [{
                         data: 'name',
                         name: 'name'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
                     },
                     {
                         data: 'locations',
