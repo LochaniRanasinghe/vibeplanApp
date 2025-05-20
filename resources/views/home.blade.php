@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('content')
-    <br><h2 style="text-align:center;" class="mb-4">Explore Our Events</h2><br>
+    <br><h2 style="text-align:center; font-size: 30px; font-family: 'Dancing Script', cursive;" class="mb-4">Explore Our Events</h2><br>
 
     <div class="container mt-3">
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
