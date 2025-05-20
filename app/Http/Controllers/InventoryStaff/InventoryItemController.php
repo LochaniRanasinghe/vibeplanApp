@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\InventoryStaff;
 use Throwable;
 
 use Carbon\Carbon;
@@ -18,7 +18,7 @@ class InventoryItemController extends Controller
      */
     public function index()
     {
-        return view('admin.inventory-items.index');
+        return view('inventory-staff.inventory-items.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class InventoryItemController extends Controller
     public function create()
     {
         $staffList = User::where('role', 'inventory_staff')->get();
-        return view('admin.inventory-items.create', compact('staffList'));
+        return view('inventory-staff.inventory-items.create', compact('staffList'));
     }
 
     /**
@@ -40,9 +40,10 @@ class InventoryItemController extends Controller
             'description' => 'required|string',
             'quantity_available' => 'required|integer|min:0',
             'price_per_unit' => 'required|numeric|min:0',
-            'inventory_staff_id' => 'required|exists:users,id',
-            'item_image' => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
+            'item_image' => 'nullable|image|mimes:jpg,jpeg,png|max:5120', 
         ]);
+      
+        $validated['inventory_staff_id'] = auth()->id();
 
         if ($request->hasFile('item_image')) {
             $path = $request->file('item_image')->store('inventory-items', 'public');
@@ -52,15 +53,16 @@ class InventoryItemController extends Controller
         InventoryItem::create($validated);
 
         flash()->success('Inventory item created successfully.');
-        return redirect()->route('admin.inventory-items.index');
+        return redirect()->route('inventory_staff.inventory-items.index');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(InventoryItem $inventoryItem)
     {
-        return view('admin.inventory-items.show', compact('inventoryItem'));
+        return view('inventory-staff.inventory-items.show', compact('inventoryItem'));
     }
 
     /**
@@ -95,6 +97,7 @@ class InventoryItemController extends Controller
         return redirect()->back();
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -115,13 +118,16 @@ class InventoryItemController extends Controller
         return redirect()->back();
     }
 
+
     public function getInventoryItems(Request $request)
     {
         try {
             $query = InventoryItem::with('staff')
+                ->where('inventory_staff_id', auth()->id())
                 ->orderBy('created_at', 'desc');
 
             return DataTables::eloquent($query)
+                ->addColumn('id', fn($item) => 'ITEM' . $item->id)
                 ->addColumn('item_name', fn($item) => $item->item_name)
                 ->addColumn('description', fn($item) => $item->description)
                 ->addColumn('quantity_available', fn($item) => $item->quantity_available)
@@ -133,7 +139,7 @@ class InventoryItemController extends Controller
                         : 'N/A';
                 })
                 ->addColumn('actions', function ($item) {
-                    return view('admin.inventory-items.components.actions', compact('item'))->render();
+                    return view('inventory-staff.inventory-items.components.actions', compact('item'))->render();
                 })
                 ->rawColumns(['actions'])
                 ->make(true);
@@ -144,4 +150,6 @@ class InventoryItemController extends Controller
             ], 500);
         }
     }
+
+
 }

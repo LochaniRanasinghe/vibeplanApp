@@ -1,4 +1,4 @@
-@extends('layouts.admin.master')
+@extends('layouts.inventory-staff.master')
 
 @section('css')
     <style>
@@ -20,14 +20,13 @@
         <div class="card-body">
             <div class="row mt-3 mb-5">
                 <b>
-                    <h6 style="text-transform: uppercase; font-weight: bold;" class="text-center">Manage Inventory Orders
+                    <h6 style="text-transform: uppercase; font-weight: bold;" class="text-center">Manage Inventory Items
                     </h6>
                 </b>
                 <table class="table align-middle" width="100%" id="inventory-orders-table"">
                     <thead class="table-primary">
                         <tr>
                             <th>Item</th>
-                            <th>Inventory Company</th>
                             <th>Ordered By</th>
                             <th>Event</th>
                             <th>Quantity</th>
@@ -49,14 +48,10 @@
             $('#inventory-orders-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('admin.inventory-orders.get-inventory-orders') }}',
+                ajax: '{{ route('inventory_staff.inventory-orders.get-inventory-orders') }}',
                 columns: [{
                         data: 'item_name',
                         name: 'inventoryItem.item_name'
-                    },
-                    {
-                        data: 'ordered_from',
-                        name: 'ordered_from'
                     },
                     {
                         data: 'ordered_by',

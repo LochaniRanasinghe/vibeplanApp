@@ -1,4 +1,4 @@
-@extends('layouts.admin.master')
+@extends('layouts.inventory-staff.master')
 
 @section('css')
     <style>
@@ -24,8 +24,8 @@
                     </h6>
                 </b>
 
-                {{-- form --}}
-                <form action="{{ route('admin.inventory-items.update', $inventoryItem->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('inventory_staff.inventory-items.update', $inventoryItem->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -54,13 +54,11 @@
                                 value="{{ old('quantity_available', $inventoryItem->quantity_available) }}" required>
                         </div>
                     </div>
-
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="description" class="form-label">Description</label>
                             <textarea name="description" id="description" rows="3" class="form-control" required>{{ old('description', $inventoryItem->description) }}</textarea>
                         </div>
-
 
                         <div class="col-md-6">
                             <label class="form-label">Current Image</label><br>
@@ -77,7 +75,7 @@
                     </div>
 
                     <div class="text-end">
-                        <a href="{{ route('admin.inventory-items.index') }}"
+                        <a href="{{ route('inventory_staff.inventory-items.index') }}"
                             class="btn btn-outline-secondary me-2 px-4">Return
                             Back</a>
                         <button type="submit" class="btn btn-primary">Update Item</button>
