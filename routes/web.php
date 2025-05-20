@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\EventTypeController;
@@ -13,17 +14,27 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EventInventoryOrderController;
 use App\Http\Controllers\Customers\CustomerDashboardController;
 use App\Http\Controllers\EventOrganizer\EventOrganizerDashboardController;
-use App\Http\Controllers\EventOrganizer\EventTypeController as EventOrganizerEventTypeController;
-use App\Http\Controllers\EventOrganizer\EventRequestController as EventOrganizerEventRequestController;
-use App\Http\Controllers\EventOrganizer\CustomEventController as EventOrganizerCustomEventController;
-use App\Http\Controllers\EventOrganizer\InventoryItemController as EventOrganizerInventoryItemController;
-use App\Http\Controllers\EventOrganizer\EventInventoryOrderController as EventOrganizerEventInventoryOrderController;
-use App\Http\Controllers\EventOrganizer\PaymentController as EventOrganizerPaymentController;
 use App\Http\Controllers\InventoryStaff\InventoryStaffDashboardController;
+use App\Http\Controllers\EventOrganizer\UserController as EventOrganizerUserController;
+use App\Http\Controllers\InventoryStaff\UserController as InventoryStaffUserController;
+use App\Http\Controllers\EventOrganizer\PaymentController as EventOrganizerPaymentController;
+use App\Http\Controllers\EventOrganizer\EventTypeController as EventOrganizerEventTypeController;
+use App\Http\Controllers\EventOrganizer\CustomEventController as EventOrganizerCustomEventController;
+use App\Http\Controllers\EventOrganizer\EventRequestController as EventOrganizerEventRequestController;
+use App\Http\Controllers\EventOrganizer\InventoryItemController as EventOrganizerInventoryItemController;
+use App\Http\Controllers\InventoryStaff\InventoryItemController as InventoryStaffInventoryItemController;
+use App\Http\Controllers\InventoryStaff\EventInventoryOrderController as InventoryStaffInventoryOrderController;
+use App\Http\Controllers\EventOrganizer\EventInventoryOrderController as EventOrganizerEventInventoryOrderController;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', [WebsiteController::class, 'home'])->name('dashboard');
+Route::get('/about', [WebsiteController::class, 'about'])->name('about');
+Route::get('/news', [WebsiteController::class, 'news'])->name('news');
+
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::get('/register', [UserController::class, 'register'])->name('register');
+Route::post('/registeruser', [UserController::class, 'registeruser'])->name('registeruser');
+Route::post('/loginuser', [UserController::class, 'loginuser'])->name('loginuser');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware('auth')->group(function () {
 
@@ -89,17 +100,26 @@ Route::middleware('auth')->group(function () {
         Route::get('payments/by-custom-event/{customEvent}', [EventOrganizerPaymentController::class, 'getPaymentsByCustomEvent'])->name('payments.by-custom-event');        
         Route::get('payments/get-payment-details', [EventOrganizerPaymentController::class, 'getPaymentDetails'])->name('payments.get-payment-details');
         Route::resource('payments', EventOrganizerPaymentController::class);
+
+        Route::resource('users', EventOrganizerUserController::class);
     });
 
     // Inventory Staff Portal
     Route::group(['prefix' => 'inventory-staff', 'middleware' => ['role:inventory_staff'], 'as' => 'inventory_staff.'], function () {
         Route::get('/dashboard', [InventoryStaffDashboardController::class, 'index'])->name('dashboard');
+
+        Route::post('inventory-items/{item}/place-order', [InventoryStaffInventoryItemController::class, 'placeOrder'])->name('inventory-items.place-order');
+        Route::get('inventory-items/get-inventory-items', [InventoryStaffInventoryItemController::class, 'getInventoryItems'])->name('inventory-items.get-inventory-items');
+        Route::get('inventory-items/{item}/order', [InventoryStaffInventoryItemController::class, 'orderItem'])->name('inventory-items.order');
+        Route::resource('inventory-items', InventoryStaffInventoryItemController::class);
+
+        Route::get('inventory-orders/by-custom-event/{customEvent}', [InventoryStaffInventoryOrderController::class, 'getOrdersByCustomEvent'])->name('inventory-orders.by-custom-event');
+        Route::get('inventory-orders/get-inventory-orders', [InventoryStaffInventoryOrderController::class, 'getInventoryOrders'])->name('inventory-orders.get-inventory-orders');
+        Route::resource('inventory-orders', InventoryStaffInventoryOrderController::class);
+
+        Route::resource('users', InventoryStaffUserController::class);
     });
 });
 
 
-Route::get('/login', [UserController::class, 'login'])->name('login');
-Route::get('/register', [UserController::class, 'register'])->name('register');
-Route::post('/registeruser', [UserController::class, 'registeruser'])->name('registeruser');
-Route::post('/loginuser', [UserController::class, 'loginuser'])->name('loginuser');
-Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
+

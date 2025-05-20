@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\EventOrganizer;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers\InventoryStaff;
 use Throwable;
+
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Flasher\Laravel\Facade\Flasher;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('event-organizer.users.index', compact('user'));
+        return view('inventory-staff.users.index', compact('user'));
     }
 
     /**
@@ -36,7 +37,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'address' => 'required|string',
+            'active_status' => 'required|in:1,0',
+            'phone_number' => 'required|string',
+            'password' => 'required|string|min:6',
+            'role' => 'required|string|in:customer,event_organizer,inventory_staff,inventory-staff',
+        ]);
+
+        $validated['password'] = bcrypt($validated['password']);
+
+        User::create($validated);
+
+        flash()->success('Profile Updated successfully.');
+        return redirect()->route('inventory-staff.users.index');
     }
 
     /**
@@ -44,7 +60,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        
+       
     }
 
     /**
@@ -52,9 +68,13 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
+    public function register()
+    {
+        return view('auth.register');
+    }
 
     /**
      * Update the specified resource in storage.
@@ -91,5 +111,4 @@ class UserController extends Controller
     {
         //
     }
-   
 }

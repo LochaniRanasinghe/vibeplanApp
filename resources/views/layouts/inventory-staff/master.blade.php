@@ -45,7 +45,7 @@
         {{-- Sidebar fixed on the left, full height --}}
         <div
             style="width: 280px; height: 100vh; background-color: #fff; position: fixed; left: 0; top: 0; overflow-y: auto;">
-            @include('layouts.admin.sidebar')
+            @include('layouts.inventory-staff.sidebar')
         </div>
 
         {{-- Right section: navbar at top, content below --}}
@@ -53,7 +53,7 @@
 
             {{-- Navbar (top of content area) --}}
             <div style="flex-shrink: 0; box-shadow: -4px 0 8px -2px rgba(0,0,0,0.2); z-index: 10;">
-                @include('layouts.admin.navbar')
+                @include('layouts.inventory-staff.navbar')
             </div>
 
 
@@ -62,7 +62,7 @@
                 <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #fff; border-radius: 5px;">
 
                     {{-- Breadcrumb section --}}
-                    @include('layouts.admin.breadcrumb')
+                    @include('layouts.inventory-staff.breadcrumb')
 {{-- 
                     @if (Flasher::hasMessages())
                         {!! Flasher::render() !!}

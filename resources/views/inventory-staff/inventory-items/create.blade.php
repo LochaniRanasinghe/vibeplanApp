@@ -1,4 +1,4 @@
-@extends('layouts.admin.master')
+@extends('layouts.inventory-staff.master')
 
 @section('css')
 
@@ -21,21 +21,10 @@
                     <h6 style="text-transform: uppercase; font-weight: bold;" class="text-center mb-4">Add Inventory Items
                     </h6>
                 </b>
-                <form action="{{ route('admin.inventory-items.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('inventory_staff.inventory-items.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
-                        <!-- Inventory Staff Dropdown -->
-                        <div class="col-md-6 mb-3">
-                            <label for="inventory_staff_id" class="form-label">Inventory Staff</label>
-                            <select name="inventory_staff_id" id="inventory_staff_id" class="form-select select2" required>
-                                <option value="">Select Staff</option>
-                                @foreach ($staffList as $staff)
-                                    <option value="{{ $staff->id }}">{{ $staff->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
                         <!-- Item Name -->
                         <div class="col-md-6 mb-3">
                             <label for="item_name" class="form-label">Item Name</label>
@@ -63,16 +52,17 @@
                             <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter description"
                                 required></textarea>
                         </div>
-
+                        
                         <!-- Item Image -->
                         <div class="col-md-6 mb-3">
                             <label for="item_image" class="form-label">Item Image (optional)</label>
                             <input type="file" class="form-control" name="item_image" id="item_image" accept="image/*">
                         </div>
+
                     </div>
 
                     <div class="text-center mt-4">
-                        <a href="{{ route('admin.inventory-items.index') }}"
+                        <a href="{{ route('inventory_staff.inventory-items.index') }}"
                             class="btn btn-outline-secondary me-2 px-4">Return
                             Back</a>
                         <button type="submit" class="btn btn-primary px-4">Create Inventory Item</button>

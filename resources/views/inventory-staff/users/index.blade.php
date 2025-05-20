@@ -1,4 +1,4 @@
-@extends('layouts.event-organizer.master')
+@extends('layouts.inventory-staff.master')
 
 @section('css')
     <style>
@@ -20,7 +20,7 @@
             <div class="row mt-3 mb-5 mx-2">
                 <h6 class="text-center text-uppercase fw-bold mb-4">My Profile</h6>
 
-                <form action="{{ route('event_organizer.users.update', $user) }}" method="POST">
+                <form action="{{ route('inventory_staff.users.update', $user) }}" method="POST">
                     @csrf
                     @method('PUT')
 
