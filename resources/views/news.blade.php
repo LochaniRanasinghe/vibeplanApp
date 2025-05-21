@@ -3,7 +3,7 @@
 @section('title', 'News')
 
 @section('content')
-    <h2>Latest News</h2>
+    <br><h1 style="text-align:center; font-size: 40px; font-family: 'Dancing Script', cursive; font-weight: 600;"  class="mb-4">Latest News</h1><br>
     <div class="container mt-3">
         <ul>
             <li>🎉 VibePlan launches new summer event packages!</li>

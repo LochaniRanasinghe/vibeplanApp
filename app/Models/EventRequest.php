@@ -28,4 +28,10 @@ class EventRequest extends Model
     {
         return $this->hasOne(CustomEvent::class);
     }
+
+    public function hasPayment()
+    {
+        return $this->customEvent && $this->customEvent->payments()->exists();
+    }
+
 }

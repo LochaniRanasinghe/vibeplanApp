@@ -1,4 +1,4 @@
-<nav style="background-color: #353866; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;">
+<nav style="background-color: #6a1d61; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;">
     <div style="font-weight: bold; font-size: 30px; font-family: 'Dancing Script', cursive;">VibePlan-Event Organizers</div>
     <div style="display: flex; gap: 20px;">
         <a href="{{ route('dashboard') }}" 

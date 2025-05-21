@@ -1,11 +1,13 @@
-@extends('layouts.website.app')
+@extends('layouts.website.app-logged')
 
-@section('title', 'Home')
+@section('title', 'Book Events')
 
 @section('content')
-    <br><h1 style="text-align:center; font-size: 40px; font-family: 'Dancing Script', cursive; font-weight: 600;" class="mb-4">Explore Our Events</h1><br>
+    <br>
+    <h1 style="text-align:center; font-size: 40px; font-family: 'Dancing Script', cursive; font-weight: 600;" class="mb-4">
+        Book Events</h1>
 
-    <div class="container mt-3">
+    <div class="container mt-5">
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
             @foreach ($eventTypes as $event)
                 <div class="col">
@@ -22,7 +24,8 @@
                             </div>
                             <p class="fw-bold text-primary mb-3">Starts From Rs. {{ number_format($event->starting_price) }}
                             </p>
-                            <a href="{{ route('customer.event-request.show', $event->id) }}" class="btn btn-primary mt-auto">Order Now</a>
+                            <a href="{{ route('customer.event-request.show', $event->id) }}"
+                                class="btn btn-primary mt-auto">Order Now</a>
                         </div>
                     </div>
                 </div>

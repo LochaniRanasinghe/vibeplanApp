@@ -3,7 +3,8 @@
 @section('title', 'About Us')
 
 @section('content')
-    <h2>About VibePlan</h2>
+    <br>
+    <h2 style="text-align:center; font-size: 40px; font-family: 'Dancing Script', cursive; font-weight: 600;"  class="mb-4">About Us</h2><br>
     <div class="container mt-3">
         <p>
             VibePlan is your one-stop destination for organizing memorable events.

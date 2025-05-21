@@ -82,8 +82,19 @@
                         </div>
                     </div>
 
+                    @if ($payment->slip_path)
+                        <div class="mb-3">
+                            <label class="form-label">Uploaded Payment Slip</label><br>
+                            <a href="{{ asset('storage/' . $payment->slip_path) }}" target="_blank"
+                                class="btn btn-outline-primary btn-sm">
+                                View Slip
+                            </a>
+                        </div>
+                    @endif
+
                     <div class="text-end mt-4">
-                        <a href="{{ route('event_organizer.payments.index') }}" class="btn btn-outline-secondary me-2 px-4">Return
+                        <a href="{{ route('event_organizer.payments.index') }}"
+                            class="btn btn-outline-secondary me-2 px-4">Return
                             Back</a>
                         <button type="submit" class="btn btn-primary px-4">Update Status</button>
                     </div>
