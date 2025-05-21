@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
@@ -13,6 +12,8 @@ use App\Http\Controllers\Admin\InventoryItemController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EventInventoryOrderController;
 use App\Http\Controllers\Customers\CustomerDashboardController;
+use App\Http\Controllers\Customers\CustomerEventsController;
+use App\Http\Controllers\Customers\EventRequestController as CustomerEventRequestController;
 use App\Http\Controllers\EventOrganizer\EventOrganizerDashboardController;
 use App\Http\Controllers\InventoryStaff\InventoryStaffDashboardController;
 use App\Http\Controllers\EventOrganizer\UserController as EventOrganizerUserController;
@@ -37,9 +38,7 @@ Route::post('/loginuser', [UserController::class, 'loginuser'])->name('loginuser
 Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware('auth')->group(function () {
-
-    //Auth::routes(); 
-
+   
     // Admin Portal
     Route::group(['prefix' => 'admin', 'middleware' => ['role:admin', 'log_request'], 'as' => 'admin.'], function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -73,6 +72,20 @@ Route::middleware('auth')->group(function () {
     // Customer Portal
     Route::group(['prefix' => 'customer', 'middleware' => ['role:customer'], 'as' => 'customer.'], function () {
         Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+        Route::put('/profile/update', [CustomerDashboardController::class, 'update'])->name('profile.update');
+        Route::get('/book-events', [CustomerDashboardController::class, 'bookevents'])->name('book-events');
+    
+        Route::get('/event-request/{eventType}/show', [CustomerEventRequestController::class, 'show'])->name('event-request.show');
+        Route::get('/event-request/{eventType}/create', [CustomerEventRequestController::class, 'create'])->name('event-request.create');
+        Route::post('/event-request', [CustomerEventRequestController::class, 'store'])->name('event-request.store'); 
+    
+        Route::get('event-requests/get-event-requests', [CustomerEventsController::class, 'getEventRequests'])->name('event-requests.get-event-requests');
+        Route::get('custom-events/get-custom-events', [CustomerEventsController::class, 'getCustomEvents'])->name('custom-events.get-custom-events');
+        Route::get('custom-events/{custom_event}/invoice', [CustomerEventsController::class, 'viewInvoice'])->name('customer.invoice.view');
+        Route::get('custom-events/{custom_event}/upload-payment', [CustomerEventsController::class, 'uploadPayment'])->name('customer.payment.upload');
+        Route::post('/custom-events/{custom_event}/store-payment', [CustomerEventsController::class, 'storePayment'])->name('customer.payment.store');
+        Route::get('event-requests/{eventRequest}/show', [CustomerEventsController::class, 'show'])->name('event-requests.show'); 
+        Route::get('event-requests/index', [CustomerEventsController::class, 'index'])->name('event-requests.index');
     });
 
     // Event Organizer Portal
