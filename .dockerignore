@@ -1,0 +1,6 @@
+node_modules
+vendor
+*.log
+
+# Ignore the symlink that causes errors
+public/storage

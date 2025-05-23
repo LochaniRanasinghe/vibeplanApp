@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2025 at 09:35 PM
+-- Generation Time: May 23, 2025 at 09:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -70,7 +70,11 @@ CREATE TABLE `custom_events` (
 
 INSERT INTO `custom_events` (`id`, `event_request_id`, `organizer_id`, `finalized_date`, `total_price`, `notes`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 2, '2025-05-21', 80000.00, 'Includes catering and decoration', 'confirmed', '2025-05-05 23:01:11', '2025-05-10 20:47:16', NULL),
-(4, 3, 2, '2025-07-26', 200000.00, 'Mr John\'s Moms Birthday at Hilton', 'inprogress', '2025-05-19 05:11:24', '2025-05-19 05:11:24', NULL);
+(4, 3, 2, '2025-07-26', 200000.00, 'Mr John\'s Moms Birthday at Hilton', 'inprogress', '2025-05-19 05:11:24', '2025-05-19 05:11:24', NULL),
+(5, 6, 2, '2025-05-29', 5000000.00, 'Event Approved', 'inprogress', '2025-05-21 14:19:31', '2025-05-21 14:19:31', NULL),
+(6, 7, 10, '2025-05-30', 70000.00, 'Approved Event', 'inprogress', '2025-05-21 14:31:19', '2025-05-21 14:31:19', NULL),
+(7, 8, 2, '2025-06-19', 150000.00, 'Grad Party Confirmed with blue backfrops', 'confirmed', '2025-05-23 09:46:24', '2025-05-23 09:53:09', NULL),
+(8, 9, 2, '2025-05-29', 850000.00, 'Event Confirmed', 'confirmed', '2025-05-23 11:01:28', '2025-05-23 11:06:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -95,9 +99,13 @@ CREATE TABLE `event_inventory_orders` (
 
 INSERT INTO `event_inventory_orders` (`id`, `custom_event_id`, `inventory_item_id`, `quantity`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 50, 'approved', '2025-05-05 23:01:11', '2025-05-10 21:45:34', NULL),
-(2, 1, 5, 50, 'pending', '2025-05-19 02:29:18', '2025-05-19 02:29:18', NULL),
+(2, 1, 5, 50, 'approved', '2025-05-19 02:29:18', '2025-05-19 18:08:42', NULL),
 (3, 1, 1, 20, 'pending', '2025-05-19 05:13:06', '2025-05-19 05:13:06', NULL),
-(4, 4, 1, 10, 'pending', '2025-05-19 06:03:38', '2025-05-19 06:03:38', NULL);
+(4, 4, 1, 10, 'pending', '2025-05-19 06:03:38', '2025-05-19 06:03:38', NULL),
+(5, 5, 1, 20, 'approved', '2025-05-21 14:22:33', '2025-05-21 14:23:04', NULL),
+(6, 6, 7, 20, 'approved', '2025-05-21 14:32:49', '2025-05-21 14:33:22', NULL),
+(7, 7, 8, 1, 'approved', '2025-05-23 09:48:37', '2025-05-23 09:49:37', NULL),
+(8, 8, 9, 1, 'approved', '2025-05-23 11:03:32', '2025-05-23 11:04:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -127,7 +135,13 @@ CREATE TABLE `event_requests` (
 INSERT INTO `event_requests` (`id`, `customer_id`, `event_type_id`, `title`, `description`, `event_date`, `guest_count`, `location`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 'John’s 30th Birthday', 'Surprise birthday party', '2025-05-21', 40, 'Colombo City Hall', 'approved', '2025-05-05 23:01:11', '2025-05-19 03:59:16', NULL),
 (2, 1, 5, 'John Engagement', 'John Engagement Description', '2025-07-26', 100, 'Hilton', 'pending', '2025-05-19 09:58:12', NULL, NULL),
-(3, 1, 1, 'My Moms Birthday', 'My Moms Birthday', '2025-07-26', 100, 'Hilton', 'approved', '2025-05-19 10:00:53', '2025-05-19 05:11:07', NULL);
+(3, 1, 1, 'My Moms Birthday', 'My Moms Birthday', '2025-07-26', 100, 'Hilton', 'approved', '2025-05-19 10:00:53', '2025-05-19 05:11:07', NULL),
+(4, 1, 10, 'Graduation Party', 'Graduation Party', '2025-06-12', 100, 'Hilton', 'pending', '2025-05-21 04:35:01', '2025-05-21 04:35:01', NULL),
+(5, 1, 9, 'Our Engagement', 'Our Engagement', '2025-05-30', 40, 'Shrangila', 'pending', '2025-05-21 05:19:44', '2025-05-21 05:19:44', NULL),
+(6, 1, 11, 'Shashhiii Event', 'Shashhiii Event Evening', '2025-05-29', 200, 'Kandy', 'approved', '2025-05-21 14:17:52', '2025-05-21 14:18:51', NULL),
+(7, 12, 10, 'Lochi Graduation', 'Lochi Graduation', '2025-05-30', 100, 'Hilton', 'approved', '2025-05-21 14:29:15', '2025-05-21 14:31:03', NULL),
+(8, 13, 13, 'Grad Party Jane Miller', 'Grad Party Jane Miller with blue backdrops', '2025-06-19', 100, 'Taj Samudra', 'approved', '2025-05-23 09:45:03', '2025-05-23 09:45:52', NULL),
+(9, 18, 17, 'My Wedding', 'My Wedding Outdoor Event', '2025-05-29', 100, 'Jetwing Lagoon', 'approved', '2025-05-23 11:00:30', '2025-05-23 11:01:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -153,16 +167,22 @@ CREATE TABLE `event_types` (
 --
 
 INSERT INTO `event_types` (`id`, `name`, `description`, `locations`, `starting_price`, `image_url`, `added_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Birth Day', 'Birth Day Event', 'Shrangila, Hilton', '200', NULL, 2, '2025-05-09 00:33:37', NULL, NULL),
-(2, 'Wedding', 'Wedding', 'Cinnamon Life, Shrangila', '400', 'public/event-types/uQA3KIuLOqjc4tXkD7jI7EeNekkWSNaCRUNRWl1j.png', 4, '2025-05-09 19:43:31', '2025-05-09 19:49:22', NULL),
-(3, 'Conference', 'Non ut fugiat a ut e', 'Animi veritatis est', '593', NULL, 4, '2025-05-09 19:52:59', '2025-05-16 15:15:18', NULL),
-(4, 'Anniversary Celebration', 'Officiis sed dolorib', 'Adipisci voluptas ex', '777', 'public/event-types/uQA3KIuLOqjc4tXkD7jI7EeNekkWSNaCRUNRWl1j.png', 4, '2025-05-09 20:04:30', '2025-05-16 15:15:08', NULL),
-(5, 'Engagement', 'Dolor suscipit ea ar', 'Fuga Tempor magnam', '94', 'event-types/Utu1Y2LbJePmnB2qWiRNXrCS3kaxNHobwYbfKgOl.png', 4, '2025-05-09 20:22:56', '2025-05-16 15:14:56', NULL),
-(6, 'Graduation Party', 'Occaecat consequatur', 'Debitis explicabo N', '626', 'event-types/ObjpaTBGuNVzt32j2dxaU85vpXEGS8Lb1SjJ2j1U.png', 4, '2025-05-09 20:27:24', '2025-05-16 15:14:45', NULL),
-(7, 'Gender Reveal Party', 'Fluckshi', 'Fluckshi', '20', 'event-types/nyBiuy6UhU994jMDhZowrTo3JzHkwmflhkEbQNhS.png', 4, '2025-05-09 21:27:47', '2025-05-16 15:13:48', NULL),
-(8, 'Outdoor Wedding', 'Ut eaque odio cumque', 'Velit irure laboris', '226', 'event-types/YgLD2Z9oCLFSFJLBmwyftZX9WnIyoimdVZLNuKAh.png', 4, '2025-05-11 13:54:38', '2025-05-16 15:13:22', NULL),
-(9, 'Outdoor Engagement', 'Outdoor Engagement', 'Shrangila, Hilton', '400', 'event-types/LFHSpRuKRxDjAiJSTYuzQrQschkyxqbsp437Y5YD.png', 4, '2025-05-17 07:57:00', '2025-05-17 07:57:00', NULL),
-(10, 'Graduation Party Updated', 'Graduation Party', 'Hilton', '4000', 'event-types/bENoWwbLt166ToyypbBtaOtgy2KzWg5viiwH13g4.jpg', 10, '2025-05-17 09:58:18', '2025-05-17 12:20:30', NULL);
+(1, 'Weddings', 'Celebrate the most magical day of your life with a dream wedding tailored to your style be it a beachside affair, a traditional Sinhala ceremony, or a lavish ballroom celebration. Our planners ensure every detail from floral arrangements to cuisine, photography, and cultural rituals is handled with grace, creating memories that last a lifetim', 'Shrangila, Hilton,Cinnamon Bentota Beach', '200000', 'event-types/YiJkVwOcJngrbCBraUDgxyfzKfAeg80ndzLBiDdI.jpg', 4, '2025-05-09 00:33:37', '2025-05-23 00:39:39', '2025-05-22 15:37:52'),
+(2, 'Music Concerts', 'From intimate acoustic sessions to large-scale music festivals, we provide sound engineering, stage management, and crowd coordination for electrifying music events that leave fans wanting more.', 'BMICH Open Ground,Nelum Pokuna Theatre', '200000', 'event-types/RHMn4ZdSLRmGbm5rjhQ009tqnyElXPjAcGBUahTI.jpg', 4, '2025-05-09 19:43:31', '2025-05-23 00:35:17', NULL),
+(3, 'Fashion Shows', 'Turn the spotlight on with a high-energy fashion show that showcases designers, models, and creativity. From ramp setup and lighting to backstage coordination and media coverage, we deliver glamour at every step.', 'The Kingsbury Sky Lounge, Gallery gala', '100000', 'event-types/VnRirHBiOVNJdGUQpHqSd2G75ybfkUYFPoYfUWmE.jpg', 4, '2025-05-09 19:52:59', '2025-05-23 00:30:28', NULL),
+(4, 'Religious Ceremonies', 'We organize respectful and serene religious events including poojas, blessings, baptisms, and prayer gatherings, with utmost attention to tradition, décor, and catering suited to cultural needs.', 'Temples,Churchs', '100000', 'event-types/ZGlaI78CbVK7O4wet6isgUm0D50BPpmxSZOjPyeI.jpg', 4, '2025-05-09 20:04:30', '2025-05-23 00:28:02', NULL),
+(5, 'Baby Showers', 'Welcome the arrival of a new life with a heartwarming baby shower filled with pastel hues, games, and delicate treats. From planning gender reveals to arranging photography, we ensure a cozy and joyous event for moms-to-be.', 'Mandarina Colombo, Cinnamon Bentota Beach', '100000', 'event-types/7TrNYTz7p5xTdDJUkTIGFMqBctPf3oZFEpmuH3xv.jpg', 4, '2025-05-09 20:22:56', '2025-05-23 00:24:31', NULL),
+(6, 'Christmas Party', 'Celebrate the magic of the season with a festive Christmas Wonderland Gala! Designed for families, friends, or corporate teams, this enchanting event features dazzling lights, decorated Christmas trees, carol performances, Santa meet-and-greets, and a gourmet holiday buffet.', 'Jetwing Lagoon, Taj Samudra, Galle Face Hotel', '100000', 'event-types/i5QSsPgcsNsPAenwe23rTQpegHbMUN8wqdfGul3r.jpg', 4, '2025-05-09 20:27:24', '2025-05-23 09:32:14', NULL),
+(7, 'Engagement Ceremonies', 'Mark the beginning of your forever journey with an engagement event full of charm and tradition. We specialize in both intimate family functions and large-scale celebrations, handling décor, music, attire, and rituals to perfection.', 'Marino Beach Hotel,Amaya Hills,Taj Samudra', '300000', 'event-types/rggCXuYnwKvXzEthKRU6nPGRFre77DwwTDjr5JEg.jpg', 4, '2025-05-09 21:27:47', '2025-05-23 00:21:25', NULL),
+(8, 'Anniversary Celebrations', 'Celebrate years of love and togetherness with a romantic and elegant anniversary event. Be it a private dinner by the beach or a golden jubilee in a grand hall, we make the occasion extra special with heartfelt touches and seamless coordination.', 'Heritance Kandalama, Jetwing Lighthouse', '100000', 'event-types/dLozIrKOnj4A4mqffDF7vI6kOtqI1ont4IgDPh5l.jpg', 4, '2025-05-11 13:54:38', '2025-05-23 00:17:27', NULL),
+(9, 'Birthday Parties', 'Whether it\'s a sweet sixteen or a fabulous fifty, we craft unforgettable birthday parties with themes, décor, entertainment, and customized menus. From private garden setups to upscale hotel banquets, each party is designed to suit your vibe and personality.', 'Shrangila, Hilton,Mount Lavinia', '100000', 'event-types/nhDN7OO9guxQTP88FmQbYVixwuGShsCr9841CgO3.jpg', 4, '2025-05-17 07:57:00', '2025-05-23 00:15:42', NULL),
+(10, 'Pool Parties', 'Cool off and splash into fun with a vibrant pool party. Whether it’s a birthday, a post-wedding celebration, or a casual get-together, we provide everything from tropical drinks and floaties to DJ music and poolside BBQs. Relaxed, stylish, and fun in the sun—your guests will love it.', 'Marino Beach,Jetwing Lagoon', '100000', 'event-types/72EUndpbDuflCvWhcQvJ0oA7W8FqPX4eqSJnYx2p.jpg', 4, '2025-05-23 09:58:18', '2025-05-23 00:41:17', NULL),
+(11, 'Corporate Conferences', 'Host high-impact business conferences with state-of-the-art AV equipment, seamless logistics, and hospitality that impresses. Ideal for annual general meetings, product launches, or international collaborations, we provide full-scale coordination for professional events that make a statement.', 'Kingsbury Hotel, Cinnamon Lakeside', '100000', 'event-types/NauI9RvfF9tUTQBoFWO2rGtGkYVCjkfLzTaRoS7t.jpg', 4, '2025-05-21 14:15:18', '2025-05-23 00:12:54', '2025-05-23 15:37:32'),
+(12, 'Bachelor & Bachelorette Parties', 'Celebrate the bride or groom’s last fling before the ring with a night (or weekend) of fun, laughter, and surprises. Whether it’s a wild night out, a luxury spa retreat, or an adventure-filled day, we create personalized experiences for unforgettable pre-wedding memories.', 'Movenpic, Secret Ella,Water’s Edge', '200000', 'event-types/0Sz3o5IRBH1GNrwb8axTiEpBk0FMQKpNG5GLsX4B.jpg', 4, '2025-05-23 00:46:12', '2025-05-23 00:46:12', NULL),
+(13, 'Graduation Parties', 'Celebrate academic milestones in style with themed decorations, music, and joyful gatherings that reflect the pride of achievement. From casual outdoor BBQs to formal indoor receptions, we tailor every detail to match the graduate’s spirit', 'Jetwing Lagoon, Taj Samudra, Galle Face Hotel', '100000', 'event-types/i4PONgRmq2yuyEpsSnsUvImw7adHSSjOeBA13vY9.jpg', 2, '2025-05-23 09:43:40', '2025-05-23 09:43:40', NULL),
+(15, 'Traditional Sinhala Wedding', 'A graceful and culturally rich ceremony celebrating love and heritage, the Traditional Sinhala Wedding (Poruwa Ceremony) features intricate customs, elegant attire, and timeless rituals. From the Poruwa platform to the vibrant procession, each moment reflects Sri Lanka’s deep-rooted traditions and beauty.', 'Jetwing Lagoon, Taj Samudra, Galle Face Hotel', '500000', 'event-types/5Xqmd6eE6lXXzgNPhe46rhviMbpolhMyrVFAcjZD.jpg', 2, '2025-05-23 10:37:37', '2025-05-23 10:37:37', '2025-05-19 16:12:21'),
+(16, 'Traditional Sinhala Wedding', 'A graceful and culturally rich ceremony celebrating love and heritage, the Traditional Sinhala Wedding (Poruwa Ceremony) features intricate customs, elegant attire, and timeless rituals. From the Poruwa platform to the vibrant procession, each moment reflects Sri Lanka’s deep-rooted traditions and beauty.', 'Jetwing Lagoon, Taj Samudra, Galle Face Hotel', '500000', 'event-types/wWn8xRDCqLpswHT0HbTiguLA9ddGtrCdIjAQgpjI.jpg', 2, '2025-05-23 10:47:28', '2025-05-23 10:47:28', '2025-05-06 16:19:27'),
+(17, 'Traditional Sinhala Wedding', 'A graceful and culturally rich ceremony celebrating love and heritage, the Traditional Sinhala Wedding (Poruwa Ceremony) features intricate customs, elegant attire, and timeless rituals. From the Poruwa platform to the vibrant procession, each moment reflects Sri Lanka’s deep-rooted traditions and beauty.', 'Jetwing Lagoon, Taj Samudra, Galle Face Hotel', '500000', 'event-types/00wCAGbS465QbfemIGuxDRoKdilnipO5E35uhizs.jpg', 2, '2025-05-23 10:58:36', '2025-05-23 10:58:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -204,11 +224,15 @@ CREATE TABLE `inventory_items` (
 --
 
 INSERT INTO `inventory_items` (`id`, `inventory_staff_id`, `item_name`, `description`, `quantity_available`, `price_per_unit`, `item_image`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 3, 'Chairs', 'Plastic chairs', 100, 100.00, NULL, '2025-05-10 16:18:43', NULL, NULL),
-(2, 3, 'Tables', 'Wooden tables', 150, 120.00, NULL, '2025-05-10 16:21:24', '2025-05-10 11:36:47', NULL),
-(3, 8, 'Flower Boquets', 'Fresh flower Boquets', 100, 10000.00, NULL, '2025-05-11 11:31:41', '2025-05-10 11:31:41', NULL),
-(4, 3, 'Baloons', 'Baloons', 10000, 100.00, NULL, '2025-05-18 20:53:50', '2025-05-18 20:53:50', NULL),
-(5, 3, 'Microphones', 'Microphones', 100, 2500.00, NULL, '2025-05-18 21:22:38', '2025-05-18 21:22:38', NULL);
+(1, 3, 'Chairs', 'Event chairs made from sturdy materials, offering both comfort and style. Available in banquet, folding, and Chiavari styles to suit different themes and setups. Stackable for efficient storage and transport.', 100, 100.00, 'inventory-items/O4o0ADMprSU1m8wsgDedEUgKBYX2djOFUmjhjkVy.jpg', '2025-05-10 16:18:43', '2025-05-23 06:40:32', NULL),
+(2, 3, 'Tables', 'Functional and stylish tables for all event types. Options include round, rectangular, and cocktail styles in various sizes. Easy to set up and built for stability and durability.', 150, 120.00, 'inventory-items/HxGatjWWthZrGcbJTYRn55q300sm0R67wh5dISKR.jpg', '2025-05-10 16:21:24', '2025-05-23 06:40:20', NULL),
+(3, 8, 'Flower Boquets', 'Fresh flower Boquets', 100, 10000.00, NULL, '2025-05-11 11:31:41', '2025-05-20 04:44:09', '2025-05-20 04:44:09'),
+(4, 3, 'Baloons', 'Durable latex and foil balloons available in a variety of colors, sizes, and shapes. Suitable for indoor and outdoor use at birthdays, weddings, corporate events, and more. Custom printing options available.', 10000, 100.00, 'inventory-items/sLOzGFLTzLP5aQ3hnN6kKDlihG60LoLBYdcYMMOR.jpg', '2025-05-18 20:53:50', '2025-05-23 06:39:59', NULL),
+(5, 3, 'Microphones', 'Professional-grade microphone suitable for speeches, performances, and announcements. Delivers clear, crisp sound with noise reduction features. Available in both wired and wireless models.', 100, 2500.00, 'inventory-items/pmqGm4zSf9IjQULuXayLIOjZfnwBy7d9XWbW6DaE.jpg', '2025-05-18 21:22:38', '2025-05-23 06:39:31', NULL),
+(6, 3, 'Candles', 'High-quality decorative candles available in various sizes, shapes, and scents. Ideal for adding ambiance to events such as weddings, parties, and ceremonies. Made from long-lasting wax for extended burn time.', 1000, 100.00, 'inventory-items/cT9i2O78jpJGBrQPvQpHriIUh5XWLcOSoGtHkxNH.jpg', '2025-05-19 17:26:10', '2025-05-23 06:38:49', NULL),
+(7, 3, 'Flower Boquets', 'Freshly arranged flower bouquets using seasonal blooms. Perfect for décor, gifting, or ceremonial use. Available in multiple styles, including classic, modern, and themed arrangements.', 5000, 750.00, 'inventory-items/ZNezgAlrvgMaNGY2LQXyrX12HezBYjtegbSfbmG4.jpg', '2025-05-20 04:43:54', '2025-05-23 06:39:03', NULL),
+(8, 3, 'Backdrops', 'Decorative backdrops in various themes and materials such as fabric, sequin, and floral panels. Ideal for photo areas, stages, or behind head tables.', 100, 10000.00, 'inventory-items/4BOmx9ruHoib2mRbdDLsEJSsgdajWzyoYa64H0Xa.jpg', '2025-05-23 09:47:49', '2025-05-23 09:47:49', NULL),
+(9, 3, 'Wedding Cake', 'A beautifully designed wedding cake serves as the sweet centerpiece of any celebration. Often multi-tiered and elegantly decorated, it symbolizes prosperity, happiness, and unity. Modern or traditional, it reflects the couple’s personal style and adds charm to the reception.', 120, 100000.00, 'inventory-items/0jcJWEBb6knvpjUh2RCfGKWZWq88ivrkddQHErLQ.jpg', '2025-05-23 11:02:53', '2025-05-23 11:02:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -297,6 +321,7 @@ CREATE TABLE `payments` (
   `amount` decimal(12,2) NOT NULL,
   `payment_method` varchar(255) NOT NULL,
   `payment_status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending',
+  `slip_path` varchar(255) DEFAULT NULL,
   `paid_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -307,8 +332,13 @@ CREATE TABLE `payments` (
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`id`, `customer_id`, `custom_event_id`, `amount`, `payment_method`, `payment_status`, `paid_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 50000.00, 'Credit Card', 'paid', '2025-05-05 23:01:11', '2025-05-05 23:01:11', '2025-05-19 03:26:06', NULL);
+INSERT INTO `payments` (`id`, `customer_id`, `custom_event_id`, `amount`, `payment_method`, `payment_status`, `slip_path`, `paid_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, 50000.00, 'Credit Card', 'paid', NULL, '2025-05-05 23:01:11', '2025-05-05 23:01:11', '2025-05-19 03:26:06', NULL),
+(4, 1, 4, 200000.00, 'bank_transfer', 'paid', 'payment_slips/5kJ6hh639mqKSOYjmyH6aeO8BEeO5mlAOa1CO4Y0.jpg', '2025-05-21 10:15:42', '2025-05-21 10:15:42', '2025-05-21 10:15:42', NULL),
+(5, 1, 5, 5000000.00, 'card', 'paid', 'payment_slips/eWwI0cFLWyDhLelec6UPUq7FNKRBXzlu7uJpsk4r.jpg', '2025-05-21 14:20:20', '2025-05-21 14:20:20', '2025-05-21 14:20:20', NULL),
+(6, 12, 6, 70000.00, 'bank_transfer', 'paid', 'payment_slips/ipEV2HJriqVYOQsQyaUErqQFW9OKR1qfFEF32p2Z.jpg', '2025-05-21 14:32:00', '2025-05-21 14:32:00', '2025-05-21 14:32:00', NULL),
+(7, 13, 7, 150000.00, 'bank_transfer', 'paid', 'payment_slips/xDQFQvq2gQNMb11yslnp74jABoyOdOUYILrz35Hz.png', '2025-05-23 09:51:45', '2025-05-23 09:51:45', '2025-05-23 09:51:45', NULL),
+(8, 18, 8, 850000.00, 'bank_transfer', 'paid', 'payment_slips/yf1TOvrCI8h9X3w4p9qOasUSywiH4VLNc1qXaUSA.jpg', '2025-05-23 11:05:33', '2025-05-23 11:05:33', '2025-05-23 11:05:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -330,7 +360,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('dSWASjZVQ1eog2japYEFM4VzX4BdpBctYWAWNupQ', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo1OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0NjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2V2ZW50LW9yZ2FuaXplci9wYXltZW50cyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJ2eFJKdktXdGtuNjA2cWRXcUUyYm1Vb3BRNk5kdDlMdnl2S3c4RHkyIjtzOjE4OiJmbGFzaGVyOjplbnZlbG9wZXMiO2E6MDp7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1747655459);
+('f4KngYQmUHtJTtXP0mn2mJBti3d9yKI5SOwxqSnq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo0OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyNzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6IlVnelRNdWtUYkxBd0U1VlB1alQ5emhzMmZlQWl6b2VzQ0x1Z1FDMEEiO3M6MTg6ImZsYXNoZXI6OmVudmVsb3BlcyI7YTowOnt9fQ==', 1748015127),
+('QPjWpyJ5jZhbNNiqNf2ugO40UgKQxZcDUXGUuSqt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo0OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyMToiaHR0cDovLzEyNy4wLjAuMTo4MDAwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6IldMeVFqYUtqVGdBcVF0b1BsRE15SFVGR09ZYm9PTGZKQnJQMWdHT04iO3M6MTg6ImZsYXNoZXI6OmVudmVsb3BlcyI7YTowOnt9fQ==', 1748018279);
 
 -- --------------------------------------------------------
 
@@ -360,17 +391,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `phone_number`, `address`, `active_status`, `profile_image`, `role`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'John Customer', 'customer@gmail.com', NULL, '0771234567', 'Colombo', '1', NULL, 'customer', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-09 17:30:10', '2025-05-16 07:53:33', NULL),
-(2, 'Jane Organizer', 'organizer@gmail.com', NULL, '0777654321', 'Colombo', '1', NULL, 'event_organizer', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-09 17:30:10', '2025-05-16 07:53:47', NULL),
-(3, 'Sam Inventory', 'inventory@gmail.com', NULL, '0779876543', 'Colombo', '1', NULL, 'inventory_staff', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-09 17:30:10', NULL, NULL),
+(1, 'John Customer1233', 'customer@gmail.com', NULL, '0778887755', 'Colombo', '1', 'profile_photos/HxDN698P455raaQrObbWiW5swL0md3w0cBayIbwZ.jpg', 'customer', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-09 17:30:10', '2025-05-21 07:50:27', NULL),
+(2, 'Jane Organizer', 'organizer@gmail.com', NULL, '0777654321', 'Colombo', '1', NULL, 'event_organizer', '$2y$12$Kl0/DnxDxNJhyDnaDzf0yuo7gIkFemJI35QRDcePePKoNKJj.SfPG', NULL, '2025-05-09 17:30:10', '2025-05-20 04:34:28', NULL),
+(3, 'Sam Inventory', 'inventory@gmail.com', NULL, '0779876888', 'Colombo', '1', NULL, 'inventory_staff', '$2y$12$20YBmvx/W1mDddfWUA5bF.uQywFuhoh5JgWm1mL4OSk.EzzvE72Wi', NULL, '2025-05-09 17:30:10', '2025-05-23 10:15:18', NULL),
 (4, 'Admin', 'admin@gmail.com', NULL, '0779999999', 'Colombo', '1', NULL, 'admin', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-09 17:30:10', NULL, NULL),
 (5, 'Janani Mayadunna', 'janani@gmail.com', NULL, '0715225252', 'Kandy', '1', NULL, 'customer', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-09 22:01:06', NULL, NULL),
 (6, 'Robert Ashley', 'robert@gmail.com', NULL, '1105966977', 'Kadana', '1', NULL, 'customer', '$2y$12$oPeWJUEnq9.8FusO1r4seuJbdj2cfvReXXRzzCWyQuTdNwqqzZKhK', NULL, '2025-05-10 17:20:12', '2025-05-09 17:50:54', NULL),
 (7, 'Lamar Sloan', 'lamar@gmail.com', NULL, '1527128640', 'Kadawatha', '1', NULL, 'event_organizer', '$2y$12$obHcmioMf3ChXbTZNkicPOhkR6JB84zGjIHPodxUyPgwIMer92X8C', NULL, '2025-05-09 17:30:10', '2025-05-09 17:30:10', NULL),
-(8, 'Lillian Conner', 'lillian@gmail.com', NULL, '1972595541', 'JaEla', '1', NULL, 'inventory_staff', '$2y$12$AMInpnhxJBZ3imOwiqPbx.cV9wI77fHbZpq3ZqRJDXSp7oeda0die', NULL, '2025-05-09 17:44:41', '2025-05-09 17:44:41', NULL),
+(8, 'Lillian Conner', 'lillian@gmail.com', NULL, '1972595541', 'JaEla', '1', NULL, 'inventory_staff', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-09 17:44:41', '2025-05-09 17:44:41', NULL),
 (9, 'Shashini', 'shashini@gmail.com', NULL, '0716848828', 'Kandy', '1', NULL, 'event_organizer', '$2y$12$SUq7PmMgEtaYaecU2osLlOvr7aUWyhz.c5b/YbZj3Y/Qb9/FlJJme', NULL, '2025-05-11 13:52:40', '2025-05-11 13:52:59', NULL),
 (10, 'Lewis Cox', 'event@organizer.com', NULL, '1522246938', 'Neque quas illo eius', '1', NULL, 'event_organizer', '$2y$12$JYlWXtzomEycPkFDsQ3PM.bDNDAuJmRzfw3cgSiRmSs/rWxQxCtn2', NULL, '2025-05-16 07:55:36', '2025-05-16 07:55:36', NULL),
-(11, 'Steven Wiley', 'wiley@gmail.com', NULL, '1807205350', 'Consequat Voluptate', '1', NULL, 'customer', '$2y$12$5ON.3Hn3I/Uz3pAlpYMrR.2KXUhR8YGVjsnltfQID83obvn1NnM9K', NULL, '2025-05-16 11:18:51', '2025-05-16 11:18:51', NULL);
+(11, 'Steven Wiley', 'wiley@gmail.com', NULL, '1807205350', 'Consequat Voluptate', '1', NULL, 'customer', '$2y$12$5ON.3Hn3I/Uz3pAlpYMrR.2KXUhR8YGVjsnltfQID83obvn1NnM9K', NULL, '2025-05-16 11:18:51', '2025-05-16 11:18:51', NULL),
+(12, 'Lochani Ranasinghe', 'lochanicustomer@gmail.com', NULL, '0716847777', 'Malabe', '1', NULL, 'customer', '$2y$12$9MOT6S5OoIYKe.YUxpUAT.pHL6Fcwip5kfVSbrU8DshlYQnWRDxb2', NULL, '2025-05-21 14:28:01', '2025-05-21 14:28:01', NULL),
+(13, 'Jane Miller', 'janem@gmail.com', NULL, '0755555555', 'Colombo', '1', NULL, 'customer', '$2y$12$fl0pyUJej8nvPoHp2Ye3LuXwqUS3vO.z.QNWeMD.4njT8fzKMtKQC', NULL, '2025-05-23 09:42:16', '2025-05-23 09:42:16', NULL),
+(14, 'Emily Fernando', 'emilyf@mail.com', NULL, '0716848877', 'Colombo', '1', NULL, 'customer', '$2y$12$9pWenI.sB6bk0bnnyzeyJ.2ocD3X7R7lpBK5AVxGTHMWwShTer0Vy', NULL, '2025-05-23 10:29:46', '2025-05-23 10:29:46', NULL),
+(15, 'Emily Fernando', 'emilyfdo@mail.com', NULL, '0716848877', 'Colombo', '1', NULL, 'customer', '$2y$12$SoMM0LJJSMgtDm8DJ.h6buLZ6iorZq7U/.gJ2x6VNs8QJGv7vqfmi', NULL, '2025-05-23 10:36:22', '2025-05-23 10:36:22', NULL),
+(16, 'Emily Fernando', 'emily@mail.com', NULL, '0716848828', 'Colombo', '1', 'profile_photos/VrETzQ6BuThLHhgx4C8pzlBdHAHxVbo5NvZakKjJ.jpg', 'customer', '$2y$12$P8H4pXS5B1UxNJ/WXC.a5OcJK74hDHJ54B/VpyqJsRXITWspnDc1O', NULL, '2025-05-23 10:45:33', '2025-05-23 10:46:17', NULL),
+(17, 'Emily Fernando', 'emily123@mail.com', NULL, '0716848877', 'Colombo', '1', 'profile_photos/ZxabiMunW2nHA9oYxYpv8aNUdSpNlEycVpDEqR2t.jpg', 'customer', '$2y$12$S5pWxnRHRZSPuX7.ccwqT.F5xg5poApdaIcIMng6vVkrk6GznJkk.', NULL, '2025-05-23 10:52:29', '2025-05-23 10:53:02', NULL),
+(18, 'Emily Fernando', 'emily123@gmail.com', NULL, '0716848877', 'Colombo', '1', 'profile_photos/6dJusRdp4nw6KBVPwdfzNGMSekNrpAYKsCbmRpK2.jpg', 'customer', '$2y$12$YD9qLuJw5H3J19qcbFSNDul775PQX9F9jk/4JEQPgMwSIlygnQrpi', NULL, '2025-05-23 10:57:25', '2025-05-23 10:57:56', NULL);
 
 --
 -- Indexes for dumped tables
@@ -489,25 +527,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `custom_events`
 --
 ALTER TABLE `custom_events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `event_inventory_orders`
 --
 ALTER TABLE `event_inventory_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `event_requests`
 --
 ALTER TABLE `event_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `event_types`
 --
 ALTER TABLE `event_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -519,7 +557,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `inventory_items`
 --
 ALTER TABLE `inventory_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -537,13 +575,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
