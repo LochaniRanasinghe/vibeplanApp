@@ -6,8 +6,12 @@
         </button>
     </a>
 
-    <button type="button" data-id="{{ $item->id }}"
-        class="btn btn-outline-danger btn-sm" style="width: 35px;">
-        <i class="mdi mdi-delete"></i>
-    </button>
+    <form action="{{ route('admin.inventory-items.destroy', $item->id) }}" method="POST" class="d-inline"
+        onsubmit="return confirm('Are you sure you want to delete this item?')">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-outline-danger btn-sm" style="width: 35px;">
+            <i class="mdi mdi-delete"></i>
+        </button>
+    </form>
 </div>

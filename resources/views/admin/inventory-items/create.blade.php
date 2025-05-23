@@ -21,7 +21,7 @@
                     <h6 style="text-transform: uppercase; font-weight: bold;" class="text-center mb-4">Add Inventory Items
                     </h6>
                 </b>
-                <form action="{{ route('admin.inventory-items.store') }}" method="POST">
+                <form action="{{ route('admin.inventory-items.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -58,10 +58,16 @@
                         </div>
 
                         <!-- Description -->
-                        <div class="col-md-10 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="description" class="form-label">Description</label>
                             <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter description"
                                 required></textarea>
+                        </div>
+
+                        <!-- Item Image -->
+                        <div class="col-md-6 mb-3">
+                            <label for="item_image" class="form-label">Item Image (optional)</label>
+                            <input type="file" class="form-control" name="item_image" id="item_image" accept="image/*">
                         </div>
                     </div>
 

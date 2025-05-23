@@ -1,6 +1,6 @@
 <style>
     .nav-pills .nav-link.active {
-        background-color: #df44dc !important;
+        background-color: #15135a !important;
         color: #fff !important;
     }
 </style>
@@ -73,6 +73,15 @@
                     <use xlink:href="#people-circle"></use>
                 </svg>
                 Event Payments
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('event_organizer.users.index') }}"
+                class="nav-link {{ request()->routeIs('event_organizer.users.*') ? 'active' : 'link-dark' }}">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#people-circle"></use>
+                </svg>
+                My Profile
             </a>
         </li>
     </ul>

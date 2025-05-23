@@ -26,8 +26,11 @@
                 @forelse ($items as $item)
                     <div class="col-md-3 mb-4">
                         <div class="card h-100 shadow-sm">
-                            <img src="{{ $item->item_image ?? asset('images/default-image.png') }}" class="card-img-top"
-                                alt="{{ $item->item_name }}" style="height: 200px; object-fit: cover;">
+                            {{-- <img src="{{ $item->item_image ?? asset('images/default-image.png') }}" class="card-img-top"
+                                alt="{{ $item->item_name }}" style="height: 200px; object-fit: cover;"> --}}
+                            <img src="{{ $item->item_image ? asset('storage/' . $item->item_image) : asset('images/default-image.png') }}"
+                                class="card-img-top" alt="{{ $item->item_name }}" style="height: 200px; object-fit: cover;">
+
 
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $item->item_name }}</h5>

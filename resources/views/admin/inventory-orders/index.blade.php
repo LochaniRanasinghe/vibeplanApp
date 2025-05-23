@@ -20,7 +20,7 @@
         <div class="card-body">
             <div class="row mt-3 mb-5">
                 <b>
-                    <h6 style="text-transform: uppercase; font-weight: bold;" class="text-center">Manage Inventory Items
+                    <h6 style="text-transform: uppercase; font-weight: bold;" class="text-center">Manage Inventory Orders
                     </h6>
                 </b>
                 <table class="table align-middle" width="100%" id="inventory-orders-table"">

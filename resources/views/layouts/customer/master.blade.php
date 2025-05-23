@@ -58,20 +58,37 @@
 
 
             {{-- Content below navbar --}}
-            <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #e5e7e7;">
+            {{-- <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #e5e7e7;">
                 <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #fff; border-radius: 5px;">
 
-                    {{-- Breadcrumb section --}}
                     @include('layouts.admin.breadcrumb')
-{{-- 
-                    @if (Flasher::hasMessages())
-                        {!! Flasher::render() !!}
-                    @endif --}}
 
-
-                    {{-- Main page content --}}
                     @yield('content')
+                </div>
+            </div> --}}
+            <div
+                style="
+                    flex-grow: 1;
+                    overflow-y: auto;
+                    padding: 20px;
+                    background-image: url('{{ asset('images/background-img-6.jpg') }}');
+                    background-size: repeat;
+                ">
+                <div
+                    style="
+                        flex-grow: 1;
+                        overflow-y: auto;
+                        padding: 20px;
+                        background-color: rgba(255, 255, 255, 0.3); /* lighter for better blur */
+                        border-radius: 12px;
+                        backdrop-filter: blur(10px);
+                        -webkit-backdrop-filter: blur(10px);
+                        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                    ">
+                    @include('layouts.admin.breadcrumb')
 
+                    @yield('content')
                 </div>
             </div>
         </div>

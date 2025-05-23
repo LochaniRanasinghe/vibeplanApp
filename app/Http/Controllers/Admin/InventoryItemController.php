@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\InventoryItem;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class InventoryItemController extends Controller
@@ -40,7 +41,13 @@ class InventoryItemController extends Controller
             'quantity_available' => 'required|integer|min:0',
             'price_per_unit' => 'required|numeric|min:0',
             'inventory_staff_id' => 'required|exists:users,id',
+            'item_image' => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
         ]);
+
+        if ($request->hasFile('item_image')) {
+            $path = $request->file('item_image')->store('inventory-items', 'public');
+            $validated['item_image'] = $path;
+        }
 
         InventoryItem::create($validated);
 
@@ -74,7 +81,13 @@ class InventoryItemController extends Controller
             'description' => 'required|string',
             'quantity_available' => 'required|integer|min:0',
             'price_per_unit' => 'required|numeric|min:0',
+            'item_image' => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
         ]);
+
+        if ($request->hasFile('item_image')) {
+            $path = $request->file('item_image')->store('inventory-items', 'public');
+            $validated['item_image'] = $path;
+        }
 
         $inventoryItem->update($validated);
 
@@ -87,7 +100,19 @@ class InventoryItemController extends Controller
      */
     public function destroy(InventoryItem $inventoryItem)
     {
-        //
+        if ($inventoryItem->inventoryOrders()->exists()) {
+            flash()->addWarning('This item cannot be deleted because it has existing orders. Deletion cannot be done!');
+            return redirect()->back();
+        }
+
+        if ($inventoryItem->item_image && Storage::disk('public')->exists($inventoryItem->item_image)) {
+            Storage::disk('public')->delete($inventoryItem->item_image);
+        }
+
+        $inventoryItem->delete();
+
+        flash()->success('Inventory item deleted successfully.');
+        return redirect()->back();
     }
 
     public function getInventoryItems(Request $request)

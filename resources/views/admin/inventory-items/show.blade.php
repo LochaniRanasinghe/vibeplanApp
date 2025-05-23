@@ -25,7 +25,7 @@
                 </b>
 
                 {{-- form --}}
-                <form action="{{ route('admin.inventory-items.update', $inventoryItem->id) }}" method="POST">
+                <form action="{{ route('admin.inventory-items.update', $inventoryItem->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -55,14 +55,30 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea name="description" id="description" rows="3" class="form-control" required>{{ old('description', $inventoryItem->description) }}</textarea>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea name="description" id="description" rows="3" class="form-control" required>{{ old('description', $inventoryItem->description) }}</textarea>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label class="form-label">Current Image</label><br>
+                            @if ($inventoryItem->item_image)
+                                <img src="{{ asset('storage/' . $inventoryItem->item_image) }}" alt="Item Image"
+                                    width="120" class="mb-2 rounded">
+                            @else
+                                <p>No image available.</p>
+                            @endif
+
+                            <label for="item_image" class="form-label mt-2">Change Image</label>
+                            <input type="file" name="item_image" id="item_image" class="form-control" accept="image/*">
+                        </div>
                     </div>
 
-
                     <div class="text-end">
-                        <a href="{{ route('admin.inventory-items.index') }}" class="btn btn-outline-secondary me-2 px-4">Return
+                        <a href="{{ route('admin.inventory-items.index') }}"
+                            class="btn btn-outline-secondary me-2 px-4">Return
                             Back</a>
                         <button type="submit" class="btn btn-primary">Update Item</button>
                     </div>

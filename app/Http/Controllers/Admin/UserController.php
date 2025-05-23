@@ -240,7 +240,7 @@ class UserController extends Controller
                 if (Auth::attempt($credentials)) {
                     switch ($user->role) {
                         case 'customer':
-                            return redirect()->intended(route('customer.dashboard'));
+                            return redirect()->intended(route('customer.event-requests.index'))->with('success', 'Login successful.');
                         case 'event_organizer':
                             return redirect()->intended(route('event_organizer.dashboard'));
                         case 'inventory_staff':

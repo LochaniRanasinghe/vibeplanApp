@@ -37,7 +37,6 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
                             <th>Locations</th>
                             <th>Starting Price</th>
                             <th>Added By</th>
@@ -61,10 +60,6 @@
                 columns: [{
                         data: 'name',
                         name: 'name'
-                    },
-                    {
-                        data: 'description',
-                        name: 'description'
                     },
                     {
                         data: 'locations',

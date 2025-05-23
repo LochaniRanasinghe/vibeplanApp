@@ -45,7 +45,7 @@
         {{-- Sidebar fixed on the left, full height --}}
         <div
             style="width: 280px; height: 100vh; background-color: #fff; position: fixed; left: 0; top: 0; overflow-y: auto;">
-            @include('layouts.admin.sidebar')
+            @include('layouts.inventory-staff.sidebar')
         </div>
 
         {{-- Right section: navbar at top, content below --}}
@@ -53,25 +53,43 @@
 
             {{-- Navbar (top of content area) --}}
             <div style="flex-shrink: 0; box-shadow: -4px 0 8px -2px rgba(0,0,0,0.2); z-index: 10;">
-                @include('layouts.admin.navbar')
+                @include('layouts.inventory-staff.navbar')
             </div>
 
 
             {{-- Content below navbar --}}
-            <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #e5e7e7;">
+            {{-- <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #e5e7e7;">
                 <div style="flex-grow: 1; overflow-y: auto; padding: 20px; background-color: #fff; border-radius: 5px;">
 
-                    {{-- Breadcrumb section --}}
-                    @include('layouts.admin.breadcrumb')
-{{-- 
-                    @if (Flasher::hasMessages())
-                        {!! Flasher::render() !!}
-                    @endif --}}
-
-
-                    {{-- Main page content --}}
+                    @include('layouts.inventory-staff.breadcrumb')
+                    
                     @yield('content')
 
+                </div>
+            </div> --}}
+            <div
+                style="
+                    flex-grow: 1;
+                    overflow-y: auto;
+                    padding: 20px;
+                    background-image: url('{{ asset('images/background-img-6.jpg') }}');
+                    background-size: repeat;
+                ">
+                <div
+                    style="
+                        flex-grow: 1;
+                        overflow-y: auto;
+                        padding: 20px;
+                        background-color: rgba(255, 255, 255, 0.3); /* lighter for better blur */
+                        border-radius: 12px;
+                        backdrop-filter: blur(10px);
+                        -webkit-backdrop-filter: blur(10px);
+                        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                    ">
+                    @include('layouts.inventory-staff.breadcrumb')
+
+                    @yield('content')
                 </div>
             </div>
         </div>
