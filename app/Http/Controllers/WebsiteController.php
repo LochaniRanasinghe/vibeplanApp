@@ -9,7 +9,7 @@ class WebsiteController extends Controller
 {
     public function home()
     {
-        $eventTypes = EventType::all();
+        $eventTypes = EventType::orderBy('created_at', 'desc')->get();
         return view('home', compact('eventTypes'));
     }
 

@@ -17,7 +17,7 @@ class CustomerDashboardController extends Controller
 
     public function bookevents()
     {
-        $eventTypes = EventType::all();
+        $eventTypes = EventType::orderBy('created_at', 'desc')->get();
         return view('customer.book-events', compact('eventTypes'));
     }
 

@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {{-- Google Fonts --}}
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat&display=swap"
+        rel="stylesheet">
 
     {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -44,10 +45,36 @@
     {{-- Navbar --}}
     @include('layouts.website.navbar')
 
-    {{-- Page Content --}}
-    <main style="min-height: 80vh; padding: 20px;">
-        @yield('content')
+    <main style="position: relative; min-height: 80vh; padding: 20px; overflow: hidden;">
+        <!-- Blurred background image layer -->
+        <div
+            style="
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('{{ asset('images/background-img-4.jpg') }}');
+            background-size: repeat;
+            background-position: center;
+        ">
+        </div>
+
+        <!-- Content layer with transparency -->
+        <div
+            style="
+            position: relative;
+            z-index: 1;
+            background-color: rgba(208, 194, 208, 0.436);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            width: 90%;
+        ">
+            @yield('content')
+        </div>
     </main>
+
 
     {{-- Footer --}}
     @include('layouts.website.footer')

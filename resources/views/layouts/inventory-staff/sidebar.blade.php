@@ -1,6 +1,6 @@
 <style>
     .nav-pills .nav-link.active {
-        background-color: #df44dc !important;
+        background-color: #e1a708 !important;
         color: #fff !important;
     }
 </style>

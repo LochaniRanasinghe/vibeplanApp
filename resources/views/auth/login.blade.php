@@ -9,9 +9,6 @@
             align-items: baseline;
             justify-content: center;
             height: 100vh;
-            background-image: url('{{ asset('images/login-background.webp') }}');
-            background-size: cover;
-            background-position: center;
         }
 
         #togglePassword {
@@ -38,10 +35,10 @@
                     <div class="card radius-10">
                         <div class="card-body p-4">
                             <div class="text-center mt-4">
-                                <h1 style="font-family: 'Dancing Script', cursive; font-size: 48px; color: #333;">
+                                <h1 style="font-family: 'Dancing Script', cursive; font-size: 48px; color: rgb(73, 50, 33);">
                                     VibePlan Login
                                 </h1>
-                                <p style="font-family: 'Montserrat', sans-serif; letter-spacing: 5px; font-size: 14px; color: #555;">
+                                <p style="font-family: 'Montserrat', sans-serif; letter-spacing: 5px; font-size: 14px; color: #6b4324;">
                                     EVENT ORGANIZERS & PLANNERS
                                 </p>
                             </div>
@@ -66,7 +63,7 @@
 
                                 {{-- Email --}}
                                 <div class="col-md-10 mx-auto form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email" style="color: rgb(73, 50, 33);">Email</label>
                                     <input type="text" id="email" name="email" placeholder="Enter email"
                                         class="form-control" value="{{ old('email') }}">
                                     <span class="text-danger">@error('email') {{ $message }} @enderror</span>
@@ -74,7 +71,7 @@
 
                                 {{-- Password --}}
                                 <div class="col-md-10 mx-auto form-group">
-                                    <label for="password">Password</label>
+                                    <label for="password" style="color: rgb(73, 50, 33);">Password</label>
                                     <div class="input-group">
                                         <input type="password" id="password" name="password" placeholder="Enter Password"
                                             class="form-control" value="{{ old('password') }}">
@@ -94,7 +91,7 @@
                                 <div class="col-md-10 mx-auto form-group">
                                     <div class="d-grid">
                                         <button class="btn" type="submit"
-                                            style="background-color:#de5ccf; padding: 5px 10px; border-radius: 5px; color: white;">
+                                            style="background-color:#824D74; padding: 5px 10px; border-radius: 5px; color: white;">
                                             Sign In
                                         </button>
                                     </div>

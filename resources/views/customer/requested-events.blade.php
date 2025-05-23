@@ -11,9 +11,9 @@
         <div class="row g-4 align-items-start">
             <b>
                 <p style="text-align: justify; font-size: 16px;">
-                    <i class="mdi mdi-note-text-outline text-danger me-1"></i>
+                    <i class="mdi mdi-note-text-outline me-1"></i>
                     These events have been confirmed and are now awaiting payment.
-    You can upload your payment receipt and click <strong>"Submit Payment"</strong> once done.
+                    You can upload your payment receipt and click <strong>"Submit Payment"</strong> once done.
                 </p>
             </b>
             <table id="customerEventTable" class="table align-middle" width="100%" id="inventory-items-table">
@@ -34,7 +34,8 @@
         </div>
     </div>
     <br><br>
-    <h1 style="text-align:center; font-size: 40px; font-family: 'Dancing Script', cursive; font-weight: 600;" class="mb-4">
+    <h1 style="text-align:center; font-size: 40px; font-family: 'Dancing Script', cursive; font-weight: 600;"
+        class="mb-4">
         Requested Events</h1>
 
 
@@ -42,7 +43,7 @@
         <div class="row g-4 align-items-start">
             <b>
                 <p style="text-align: justify; font-size: 16px;">
-                    <i class="mdi mdi-note-text-outline text-danger me-1"></i>
+                    <i class="mdi mdi-note-text-outline me-1"></i>
                     These requests have been submitted by event organizers and are currently awaiting approval.
                     Please wait until the event appears under the confirmed events list.
                 </p>
@@ -126,6 +127,80 @@
                 ]
             });
 
+            // $('#customerEventTable').DataTable({
+            //     processing: true,
+            //     serverSide: true,
+            //     ajax: '{{ route('customer.custom-events.get-custom-events') }}',
+            //     columns: [{
+            //             data: 'custom_event_id',
+            //             name: 'id',
+            //             render: function(data) {
+            //                 return `<span class="badge rounded-pill bg-primary">${data}</span>`;
+            //             }
+            //         },
+
+            //         {
+            //             data: 'event_type',
+            //             name: 'request.eventType.name'
+            //         },
+            //         {
+            //             data: 'title',
+            //             name: 'request.title'
+            //         },
+            //         {
+            //             data: 'location',
+            //             name: 'request.location'
+            //         },
+            //         {
+            //             data: 'finalized_date',
+            //             name: 'finalized_date'
+            //         },
+
+            //         {
+            //             data: 'status',
+            //             name: 'status',
+            //             render: function(data) {
+            //                 let badge = 'secondary';
+            //                 switch (data) {
+            //                     case 'pending':
+            //                         badge = 'warning';
+            //                         break;
+            //                     case 'confirmed':
+            //                         badge = 'success';
+            //                         break;
+            //                     case 'rejected':
+            //                         badge = 'danger';
+            //                         break;
+            //                     case 'inprogress':
+            //                         badge = 'primary';
+            //                         break;
+            //                 }
+            //                 return `<span class="badge bg-${badge}">${data.charAt(0).toUpperCase() + data.slice(1)}</span>`;
+            //             }
+            //         },
+            //         {
+            //             data: 'payment_status',
+            //             name: 'payment_status',
+            //             render: function(data) {
+            //                 if (data === 'paid') {
+            //                     return `<span class="badge bg-success">Paid</span>`;
+            //                 } else {
+            //                     return `<span class="badge bg-danger">Awaiting Payment</span>`;
+            //                 }
+            //             }
+            //         },
+            //         {
+            //             data: 'total_price',
+            //             name: 'total_price'
+            //         },
+            //         {
+            //             data: 'actions',
+            //             name: 'actions',
+            //             orderable: false,
+            //             searchable: false
+            //         }
+            //     ]
+            // });
             $('#customerEventTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -137,7 +212,6 @@
                             return `<span class="badge rounded-pill bg-primary">${data}</span>`;
                         }
                     },
-
                     {
                         data: 'event_type',
                         name: 'request.eventType.name'
@@ -154,38 +228,42 @@
                         data: 'finalized_date',
                         name: 'finalized_date'
                     },
-
                     {
                         data: 'status',
                         name: 'status',
                         render: function(data) {
                             let badge = 'secondary';
-                            switch (data) {
+                            let label = data;
+
+                            switch (data.toLowerCase()) {
                                 case 'pending':
                                     badge = 'warning';
+                                    label = 'Pending';
                                     break;
                                 case 'confirmed':
                                     badge = 'success';
+                                    label = 'Event Completed';
                                     break;
                                 case 'rejected':
                                     badge = 'danger';
+                                    label = 'Rejected';
                                     break;
                                 case 'inprogress':
                                     badge = 'primary';
+                                    label = 'In Progress';
                                     break;
                             }
-                            return `<span class="badge bg-${badge}">${data.charAt(0).toUpperCase() + data.slice(1)}</span>`;
+
+                            return `<span class="badge bg-${badge}">${label}</span>`;
                         }
                     },
                     {
                         data: 'payment_status',
                         name: 'payment_status',
                         render: function(data) {
-                            if (data === 'paid') {
-                                return `<span class="badge bg-success">Paid</span>`;
-                            } else {
-                                return `<span class="badge bg-danger">Awaiting Payment</span>`;
-                            }
+                            return data === 'paid' ?
+                                `<span class="badge bg-success">Paid</span>` :
+                                `<span class="badge bg-danger">Awaiting Payment</span>`;
                         }
                     },
                     {
@@ -198,7 +276,12 @@
                         orderable: false,
                         searchable: false
                     }
-                ]
+                ],
+                rowCallback: function(row, data, index) {
+                    if (data.payment_status === 'paid' && data.status.toLowerCase() === 'confirmed') {
+                        $(row).addClass('table-success'); // Bootstrap green background
+                    }
+                }
             });
 
 

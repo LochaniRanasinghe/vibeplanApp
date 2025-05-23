@@ -3,7 +3,23 @@
 @section('title', 'Home')
 
 @section('content')
-    <br><h1 style="text-align:center; font-size: 40px; font-family: 'Dancing Script', cursive; font-weight: 600;" class="mb-4">Explore Our Events</h1><br>
+    <br>
+    <div style="text-align: center;">
+        <h1 style="
+            font-size: 40px;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 600;
+            color:#300628;
+            background-color: #fff; /* or try rgba(130, 77, 116, 0.3) */
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: inline-block;
+        "
+            class="mb-4">
+            Explore Our Events
+        </h1>
+    </div>
+    <br>
 
     <div class="container mt-3">
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
@@ -20,9 +36,13 @@
                                     <span class="badge bg-secondary me-1">{{ trim($location) }}</span>
                                 @endforeach
                             </div>
-                            <p class="fw-bold text-primary mb-3">Starts From Rs. {{ number_format($event->starting_price) }}
+                            <p class="fw-bold mb-3" style="color: rgb(23, 119, 216);">Starts From Rs.
+                                {{ number_format($event->starting_price) }}
                             </p>
-                            <a href="{{ route('customer.event-request.show', $event->id) }}" class="btn btn-primary mt-auto">Order Now</a>
+                            <a href="{{ route('customer.event-request.show', $event->id) }}" class="btn mt-auto"
+                                style="background-color: #903b98; color: #fff; border: none;">
+                                Order Now
+                            </a>
                         </div>
                     </div>
                 </div>
