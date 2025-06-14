@@ -107,7 +107,8 @@
 
             document.getElementById('download-report-btn').addEventListener('click', function() {
                 const firstChart = document.getElementById('incomePerEventChart');
-                const thirdChart = document.getElementById('topItemsChart');
+const thirdChart = document.getElementById('topItemsChart');
+
 
                 const form = document.createElement('form');
                 form.method = 'POST';

@@ -109,6 +109,7 @@
                 const firstChart = document.getElementById('incomePerEventChart');
                 const thirdChart = document.getElementById('topItemsChart');
 
+
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = "{{ route('event_organizer.dashboard.download-report') }}";

@@ -92,8 +92,7 @@ Route::middleware('auth')->group(function () {
     // Event Organizer Portal
     Route::group(['prefix' => 'event-organizer', 'middleware' => ['role:event_organizer'], 'as' => 'event_organizer.'], function () {
         Route::get('/dashboard', [EventOrganizerDashboardController::class, 'index'])->name('dashboard');
-        Route::post('/dashboard/download-report', [EventOrganizerDashboardController::class, 'downloadReport'])->name('dashboard.download-report');
-
+        
         Route::get('event-types/get-event-types', [EventOrganizerEventTypeController::class, 'getEventTypes'])->name('event-types.get-event-types');
         Route::resource('event-types', EventOrganizerEventTypeController::class);
 

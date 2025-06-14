@@ -4,9 +4,7 @@ namespace App\Http\Controllers\EventOrganizer;
 use Carbon\Carbon;
 
 use App\Models\Payment;
-use App\Models\CustomEvent;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\EventInventoryOrder;
 use App\Http\Controllers\Controller;
 
@@ -74,31 +72,35 @@ class EventOrganizerDashboardController extends Controller
         return view('event-organizer.dashboard', compact('incomePerEvent', 'monthlyIncome', 'mostOrderedItems'));
     }
 
-    public function downloadReport(Request $request)
+    public function downloadReport()
     {
-        $chart1 = $request->input('chart1'); // base64 of first chart
-        $chart3 = $request->input('chart3'); // base64 of third chart
-
-        // Your existing data
         $organizerId = auth()->id();
 
         $eventIncome = CustomEvent::with(['request'])
             ->where('organizer_id', $organizerId)
             ->withSum('payments', 'amount')
             ->get()
-            ->map(fn($event) => [
-                'title' => optional($event->request)->title ?? 'Untitled Event',
-                'income' => $event->payments_sum_amount ?? 0,
-            ]);
+            ->map(function ($event) {
+                return [
+                    'title' => optional($event->request)->title ?? 'Untitled Event',
+                    'income' => $event->payments_sum_amount ?? 0,
+                ];
+            });
 
-        $monthlyIncome = Payment::whereHas('customEvent', fn($q) => $q->where('organizer_id', $organizerId))
+        $monthlyIncome = Payment::whereHas('customEvent', function ($q) use ($organizerId) {
+                $q->where('organizer_id', $organizerId);
+            })
             ->where('payment_status', 'paid')
             ->get()
-            ->groupBy(fn($payment) => \Carbon\Carbon::parse($payment->paid_at)->format('Y-m'))
-            ->map(fn($group) => $group->sum('amount'));
+            ->groupBy(function ($payment) {
+                return \Carbon\Carbon::parse($payment->paid_at)->format('Y-m');
+            })
+            ->map(function ($group) {
+                return $group->sum('amount');
+            });
 
         $topItems = EventInventoryOrder::with(['inventoryItem.staff'])
-            ->whereHas('customEvent', fn($q) => $q->where('organizer_id', $organizerId))
+            ->whereHas('customEvent', fn ($q) => $q->where('organizer_id', $organizerId))
             ->where('status', 'approved')
             ->get()
             ->groupBy('inventory_item_id')
@@ -112,13 +114,7 @@ class EventOrganizerDashboardController extends Controller
                 ];
             });
 
-        $pdf = Pdf::loadView('event-organizer.reports.dashboard_pdf', [
-            'eventIncome' => $eventIncome,
-            'monthlyIncome' => $monthlyIncome,
-            'topItems' => $topItems,
-            'chart1' => $chart1,
-            'chart3' => $chart3
-        ]);
+        $pdf = Pdf::loadView('event-organizer.reports.dashboard_pdf', compact('eventIncome', 'monthlyIncome', 'topItems'));
 
         return $pdf->download('organizer_dashboard_report.pdf');
     }

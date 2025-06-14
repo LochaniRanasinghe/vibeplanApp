@@ -106,8 +106,8 @@
             });
 
             document.getElementById('download-report-btn').addEventListener('click', function() {
-                const firstChart = document.getElementById('incomePerEventChart');
-                const thirdChart = document.getElementById('topItemsChart');
+                const firstChart = document.getElementById('firstChart'); // update ID accordingly
+                const thirdChart = document.getElementById('thirdChart'); // update ID accordingly
 
                 const form = document.createElement('form');
                 form.method = 'POST';

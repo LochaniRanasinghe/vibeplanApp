@@ -16,8 +16,6 @@
 @section('content')
     <div class="card" style="border-radius: 15px;">
         <div class="card-body">
-            <button id="download-report-btn" class="btn btn-primary">Download Report</button>
-
             <div class="container-fluid mt-3">
                 <canvas id="incomePerEventChart" height="100"></canvas>
                 <canvas id="monthlyIncomeChart" height="100"></canvas>
@@ -63,7 +61,6 @@
             });
 
             const topItems = {!! json_encode($mostOrderedItems) !!};
-
             const topItemLabels = topItems.map(i => i.item_name);
             const topItemData = topItems.map(i => i.quantity);
 
@@ -78,63 +75,10 @@
                     }]
                 },
                 options: {
-                    responsive: true,
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: function(context) {
-                                    const index = context.dataIndex;
-                                    const staff = topItems[index].staff;
-                                    const paid = topItems[index].total_paid.toLocaleString('en-LK', {
-                                        style: 'currency',
-                                        currency: 'LKR'
-                                    });
-                                    return [
-                                        'Staff: ' + staff,
-                                        'Total Paid: ' + paid
-                                    ];
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+                    responsive: true
                 }
             });
 
-            document.getElementById('download-report-btn').addEventListener('click', function() {
-                const firstChart = document.getElementById('incomePerEventChart');
-                const thirdChart = document.getElementById('topItemsChart');
-
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = "{{ route('event_organizer.dashboard.download-report') }}";
-                form.style.display = 'none';
-
-                const csrf = document.createElement('input');
-                csrf.type = 'hidden';
-                csrf.name = '_token';
-                csrf.value = '{{ csrf_token() }}';
-                form.appendChild(csrf);
-
-                const chart1 = document.createElement('input');
-                chart1.type = 'hidden';
-                chart1.name = 'chart1';
-                chart1.value = firstChart.toDataURL('image/png');
-                form.appendChild(chart1);
-
-                const chart3 = document.createElement('input');
-                chart3.type = 'hidden';
-                chart3.name = 'chart3';
-                chart3.value = thirdChart.toDataURL('image/png');
-                form.appendChild(chart3);
-
-                document.body.appendChild(form);
-                form.submit();
-            });
         });
     </script>
 @endsection

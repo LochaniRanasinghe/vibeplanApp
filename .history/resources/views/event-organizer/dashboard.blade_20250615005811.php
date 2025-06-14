@@ -16,7 +16,7 @@
 @section('content')
     <div class="card" style="border-radius: 15px;">
         <div class="card-body">
-            <button id="download-report-btn" class="btn btn-primary">Download Report</button>
+            <button id="download-report-btn" class="btn btn-primary">Download Report with Charts</button>
 
             <div class="container-fluid mt-3">
                 <canvas id="incomePerEventChart" height="100"></canvas>
@@ -106,8 +106,8 @@
             });
 
             document.getElementById('download-report-btn').addEventListener('click', function() {
-                const firstChart = document.getElementById('incomePerEventChart');
-                const thirdChart = document.getElementById('topItemsChart');
+                const firstChart = document.getElementById('firstChart'); // update ID accordingly
+                const thirdChart = document.getElementById('thirdChart'); // update ID accordingly
 
                 const form = document.createElement('form');
                 form.method = 'POST';
