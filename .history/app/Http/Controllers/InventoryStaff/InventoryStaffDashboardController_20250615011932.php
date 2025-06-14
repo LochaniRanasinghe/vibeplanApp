@@ -16,7 +16,7 @@ class InventoryStaffDashboardController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
+        $staffId = Auth::id();
 
         $itemsSold = InventoryItem::where('inventory_staff_id', $user->id)
             ->withCount(['inventoryOrders as total_sold' => function ($q) {
@@ -33,6 +33,32 @@ class InventoryStaffDashboardController extends Controller
                 ];
             });
 
+
+        $items = InventoryItem::with('inventoryOrders.customEvent')
+            ->where('inventory_staff_id', $staffId)
+            ->get();
+
+        $itemsSummary = $items->map(function ($item) {
+            $totalSold = $item->inventoryOrders->where('status', 'approved')->sum('quantity');
+            $totalRevenue = $totalSold * $item->price_per_unit;
+
+            $events = $item->inventoryOrders
+                ->filter(fn($o) => $o->status === 'approved')
+                ->map(fn($o) => optional(optional($o->customEvent)->request)->title)
+                ->filter()
+                ->unique()
+                ->values();
+
+            return [
+                'item_name' => $item->item_name,
+                'quantity_sold' => $totalSold,
+                'revenue' => $totalRevenue,
+                'quantity_available' => $item->quantity_available,
+                'events' => $events
+            ];
+        });
+
+        // Monthly revenue for current staff
         $monthlyRevenue = EventInventoryOrder::with('inventoryItem')
             ->whereHas('inventoryItem', function ($q) use ($user) {
                 $q->where('inventory_staff_id', $user->id);
@@ -47,8 +73,7 @@ class InventoryStaffDashboardController extends Controller
                     return optional($order->inventoryItem)->price_per_unit * $order->quantity;
                 });
             });
-
-        return view('inventory-staff.dashboard', compact('itemsSold', 'monthlyRevenue'));
+        return view('inventory-staff.dashboard', compact('itemsSummary', 'monthlyRevenue'));
     }
 
     public function downloadReport(Request $request)

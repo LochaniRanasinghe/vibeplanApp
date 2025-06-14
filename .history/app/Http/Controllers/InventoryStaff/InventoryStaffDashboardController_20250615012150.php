@@ -16,7 +16,7 @@ class InventoryStaffDashboardController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user(); // 🔴 THIS LINE FIXES THE ERROR
 
         $itemsSold = InventoryItem::where('inventory_staff_id', $user->id)
             ->withCount(['inventoryOrders as total_sold' => function ($q) {

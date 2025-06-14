@@ -25,7 +25,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 card mb-4">
+                    <div class="col-md-6 card mb-4">
                         <div class="card-header">Monthly Revenue</div>
                         <div class="card-body">
                             <canvas id="monthlyRevenueChart" height="100"></canvas>

@@ -18,14 +18,14 @@
 
             <div class="container-fluid mt-3">
                 <div class="row">
-                    <div class="col-md-12 card mb-4">
+                    <div class="col-md-6 card mb-4">
                         <div class="card-header">Items Sold by Name</div>
                         <div class="card-body">
                             <canvas id="itemsSoldChart" height="100"></canvas>
                         </div>
                     </div>
 
-                    <div class="col-md-12 card mb-4">
+                    <div class="col-md-6 card mb-4">
                         <div class="card-header">Monthly Revenue</div>
                         <div class="card-body">
                             <canvas id="monthlyRevenueChart" height="100"></canvas>
