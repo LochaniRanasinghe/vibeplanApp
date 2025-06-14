@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 card mb-4">
+                    <div class="card mb-4">
                         <div class="card-header">Revenue by Event Type (Based on Payments)</div>
                         <div class="card-body">
                             <canvas id="eventTypeRevenueChart" height="100"></canvas>
@@ -84,15 +84,13 @@
             });
 
 
-            const salesByEventData = @json($salesByEvent);
-
             const salesByEventChart = new Chart(document.getElementById('salesByEventChart'), {
                 type: 'bar',
                 data: {
-                    labels: salesByEventData.map(e => e.event),
+                    labels: {!! json_encode($salesByEvent->pluck('event')) !!},
                     datasets: [{
                         label: 'Items Sold',
-                        data: salesByEventData.map(e => e.quantity),
+                        data: {!! json_encode($salesByEvent->pluck('quantity')) !!},
                         backgroundColor: 'rgba(153, 102, 255, 0.6)',
                         borderColor: 'rgba(153, 102, 255, 1)',
                         borderWidth: 1
@@ -100,16 +98,6 @@
                 },
                 options: {
                     responsive: true,
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: function(context) {
-                                    const items = salesByEventData[context.dataIndex].items || [];
-                                    return 'Items: ' + items.join(', ');
-                                }
-                            }
-                        }
-                    },
                     scales: {
                         y: {
                             beginAtZero: true
@@ -117,8 +105,6 @@
                     }
                 }
             });
-
-
 
             const monthlyRevenueData = @json($monthlyItemRevenue);
 

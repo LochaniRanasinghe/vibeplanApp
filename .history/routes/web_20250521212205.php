@@ -42,8 +42,7 @@ Route::middleware('auth')->group(function () {
     // Admin Portal
     Route::group(['prefix' => 'admin', 'middleware' => ['role:admin', 'log_request'], 'as' => 'admin.'], function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::post('/dashboard/report', [AdminDashboardController::class, 'generateReport'])->name('dashboard.report');
-
+        
         Route::get('users/get-event-organizers', [UserController::class, 'getEventOrganizers'])->name('users.get-event-organizers');
         Route::get('users/get-inventory-staff', [UserController::class, 'getInventoryStaff'])->name('users.get-inventory-staff');
         Route::get('users/get-customers', [UserController::class, 'getCustomers'])->name('users.get-customers');

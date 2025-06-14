@@ -50,24 +50,18 @@ class AdminDashboardController extends Controller
             });
         
 
-        $salesByEvent = EventInventoryOrder::with(['customEvent.request', 'inventoryItem'])
-            ->where('status', 'approved')
-            ->get()
-            ->groupBy('custom_event_id')
-            ->map(function ($orders) {
-                $eventTitle = optional($orders->first()->customEvent->request)->title ?? 'Unknown Event';
-                $quantity = $orders->sum('quantity');
-                $items = $orders->pluck('inventoryItem.item_name')->filter()->unique()->values();
-        
-                return [
-                    'event' => $eventTitle,
-                    'quantity' => $quantity,
-                    'items' => $items,
-                ];
-            })
-            ->values(); // reset keys
-        
-        
+        $salesByEvent = EventInventoryOrder::with('customEvent.request')
+        ->select('custom_event_id', DB::raw('SUM(quantity) as total_quantity'))
+        ->groupBy('custom_event_id')
+        ->get()
+        ->map(function ($order) {
+            $eventTitle = optional($order->customEvent->request)->title ?? 'Unknown Event';
+            return [
+                'event' => $eventTitle,
+                'quantity' => $order->total_quantity,
+            ];
+        });
+
         $eventRevenue = Payment::with([
             'customEvent.request.eventType.addedBy'
         ])
@@ -136,31 +130,16 @@ class AdminDashboardController extends Controller
                 ];
             });
 
-        $salesByEvent = EventInventoryOrder::with(['customEvent.request', 'inventoryItem'])
-            ->where('status', 'approved')
-            ->get()
+        $salesByEvent = EventInventoryOrder::with('customEvent.request')
+            ->select('custom_event_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('custom_event_id')
-            ->map(function ($orders) {
-                $eventTitle = optional($orders->first()->customEvent->request)->title ?? 'Unknown Event';
-                $totalQuantity = $orders->sum('quantity');
-        
-                // Group and count by inventory item
-                $itemsWithQty = $orders->groupBy('inventory_item_id')->map(function ($group) {
-                    $itemName = optional($group->first()->inventoryItem)->item_name ?? 'Unknown Item';
-                    $itemQty = $group->sum('quantity');
-                    return [
-                        'name' => $itemName,
-                        'quantity' => $itemQty,
-                    ];
-                })->values(); // reset keys
-        
+            ->get()
+            ->map(function ($order) {
                 return [
-                    'event' => $eventTitle,
-                    'quantity' => $totalQuantity,
-                    'items' => $itemsWithQty,
+                    'event' => optional($order->customEvent->request)->title ?? 'Unknown Event',
+                    'quantity' => $order->total_quantity,
                 ];
-            })->values(); // reset keys to avoid JSON issues
-        
+            });
 
         $monthlyItemRevenue = EventInventoryOrder::with(['inventoryItem.staff'])
             ->where('status', 'approved')

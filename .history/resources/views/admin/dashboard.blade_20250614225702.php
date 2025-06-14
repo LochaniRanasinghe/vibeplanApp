@@ -10,15 +10,6 @@
     <div class="card" style="border-radius: 15px;">
         <div class="card-body">
             <div class="container-fluid mt-3">
-                <form id="reportForm" method="POST" action="{{ route(name: 'admin.dashboard.report') }}">
-                    @csrf
-                    <input type="hidden" name="salesChart" id="salesChartInput">
-                    <input type="hidden" name="salesByEventChart" id="salesByEventChartInput">
-                    <input type="hidden" name="monthlyRevenueChart" id="monthlyRevenueChartInput">
-                    <input type="hidden" name="eventTypeRevenueChart" id="eventTypeRevenueChartInput">
-                    <button type="submit" class="btn btn-primary mb-3">📄 Download Report</button>
-                </form>
-
                 <div class="row">
                     <div class="col-md-6 card mb-4">
                         <div class="card-header">Inventory Sales (Bar Chart)</div>
@@ -35,14 +26,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 card mb-4">
+                    <div class="card mb-4">
                         <div class="card-header">Monthly Revenue by Inventory Item</div>
                         <div class="card-body">
                             <canvas id="monthlyRevenueChart" height="100"></canvas>
                         </div>
                     </div>
 
-                    <div class="col-md-12 card mb-4">
+                    <div class="card mb-4">
                         <div class="card-header">Revenue by Event Type (Based on Payments)</div>
                         <div class="card-body">
                             <canvas id="eventTypeRevenueChart" height="100"></canvas>
@@ -84,15 +75,13 @@
             });
 
 
-            const salesByEventData = @json($salesByEvent);
-
             const salesByEventChart = new Chart(document.getElementById('salesByEventChart'), {
                 type: 'bar',
                 data: {
-                    labels: salesByEventData.map(e => e.event),
+                    labels: {!! json_encode($salesByEvent->pluck('event')) !!},
                     datasets: [{
                         label: 'Items Sold',
-                        data: salesByEventData.map(e => e.quantity),
+                        data: {!! json_encode($salesByEvent->pluck('quantity')) !!},
                         backgroundColor: 'rgba(153, 102, 255, 0.6)',
                         borderColor: 'rgba(153, 102, 255, 1)',
                         borderWidth: 1
@@ -100,16 +89,6 @@
                 },
                 options: {
                     responsive: true,
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: function(context) {
-                                    const items = salesByEventData[context.dataIndex].items || [];
-                                    return 'Items: ' + items.join(', ');
-                                }
-                            }
-                        }
-                    },
                     scales: {
                         y: {
                             beginAtZero: true
@@ -117,8 +96,6 @@
                     }
                 }
             });
-
-
 
             const monthlyRevenueData = @json($monthlyItemRevenue);
 
@@ -203,26 +180,6 @@
                     }
                 }
             });
-
-
-            document.getElementById('reportForm').addEventListener('submit', function(e) {
-                // Prevent default for now
-                e.preventDefault();
-
-                // Convert each canvas to base64
-                document.getElementById('salesChartInput').value = document.getElementById('salesChart')
-                    .toDataURL();
-                document.getElementById('salesByEventChartInput').value = document.getElementById(
-                    'salesByEventChart').toDataURL();
-                document.getElementById('monthlyRevenueChartInput').value = document.getElementById(
-                    'monthlyRevenueChart').toDataURL();
-                document.getElementById('eventTypeRevenueChartInput').value = document.getElementById(
-                    'eventTypeRevenueChart').toDataURL();
-
-                // Submit now that inputs are filled
-                e.target.submit();
-            });
-
         });
     </script>
 @endsection

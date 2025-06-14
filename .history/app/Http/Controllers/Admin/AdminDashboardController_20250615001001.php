@@ -136,7 +136,7 @@ class AdminDashboardController extends Controller
                 ];
             });
 
-        $salesByEvent = EventInventoryOrder::with(['customEvent.request', 'inventoryItem'])
+            $salesByEvent = EventInventoryOrder::with(['customEvent.request', 'inventoryItem'])
             ->where('status', 'approved')
             ->get()
             ->groupBy('custom_event_id')
