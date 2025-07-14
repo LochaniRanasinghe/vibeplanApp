@@ -34,7 +34,7 @@ class EventTypeController extends Controller
      */
     public function store(Request $request)
     {
-        
+        dd
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
